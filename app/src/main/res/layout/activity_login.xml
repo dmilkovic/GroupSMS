@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vanessa.groupsms.Login">
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:paddingBottom="20dp"
+            android:src="@drawable/login">
+
+        </ImageView>
+
+        <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="Login with your google account:"
+            android:paddingBottom="20dp" >
+        </TextView>
+
+         <com.google.android.gms.common.SignInButton
+             android:id="@+id/sign_in_button"
+             android:layout_width="150dp"
+             android:layout_height="70dp" />
+
+     </LinearLayout>
+
+
+
+ </android.support.constraint.ConstraintLayout>

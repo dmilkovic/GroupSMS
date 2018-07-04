@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "518454727807",
+    "firebase_url": "https://groupsms-9f8cd.firebaseio.com",
+    "project_id": "groupsms-9f8cd",
+    "storage_bucket": "groupsms-9f8cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518454727807:android:da50d7cc05f0893d",
+        "android_client_info": {
+          "package_name": "com.example.readcontacts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518454727807-n4sov5gm4fpie62djahtjgt1mjhj2dct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.readcontacts",
+            "certificate_hash": "c133e0353f88cc4692ae5b33882886bf603b4b43"
+          }
+        },
+        {
+          "client_id": "518454727807-mhj64kqa8bbdi88v510dkm7qvgia3b8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXVEPA-czzLRoGMsOob0GUEPf2A-lSs78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518454727807-mhj64kqa8bbdi88v510dkm7qvgia3b8c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518454727807:android:dd2e4d387873ec89",
+        "android_client_info": {
+          "package_name": "com.example.vanessa.groupsms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518454727807-hpij8p7li8j3pg7oekijjol17cpr9ik2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vanessa.groupsms",
+            "certificate_hash": "c133e0353f88cc4692ae5b33882886bf603b4b43"
+          }
+        },
+        {
+          "client_id": "518454727807-r9ii3qdc5e7hvlukr7ldku4ikouqjq8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vanessa.groupsms",
+            "certificate_hash": "f08eeac5594fc625c3277000bd69a34cad6887ca"
+          }
+        },
+        {
+          "client_id": "518454727807-mhj64kqa8bbdi88v510dkm7qvgia3b8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXVEPA-czzLRoGMsOob0GUEPf2A-lSs78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518454727807-mhj64kqa8bbdi88v510dkm7qvgia3b8c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
