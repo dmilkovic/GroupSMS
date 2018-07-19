@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -97,7 +98,8 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                 int i=0;
                 Group group = dataSnapshot.getValue(Group.class);
                 members_now = group.getMembers();
-                for(int j=0;j<members_now.size(); j++) {
+//                Log.d("contacts1", members_now.toArray()[0].toString());
+                for(int j = 0;j < members_now.size(); j++) {
                     i++;
                 }
             }
@@ -204,13 +206,27 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                 @Override
                 public void run() {
                     contacts = new ArrayList<String>();
-                    sublist.removeAll(members_now);
+                    //sublist.removeAll(members_now);
                     for(String element: sublist){
-                        list.add(new Model(element));
+                        Model m = new Model(element);
+                        if(members_now.contains(element)) {
+                            m.setSelected(true);
+                        }
+                        list.add(m);
+                        //list.add(new Model(element));
                     }
                     adapter = new MyAdapter(AddContacts.this,list);
                     mListView.setAdapter(adapter);
                     mListView.setOnItemClickListener(AddContacts.this);
+                    for(int i = 0; i < members_now.size();i++)
+                    {
+                        Log.d("cont1", "kontakt" + members_now.get(i) + list.contains(members_now.get(i)) + list.get(i));
+                        if(list.contains(members_now.get(i)))
+                        {
+
+                            mListView.setItemChecked(i, true);
+                        }
+                    }
                 }
             });
 
@@ -263,9 +279,14 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                 members = group.getMembers();
 
                 for(Model item: list ){
-                    if(item.isSelected()) members.add(item.getName());
+                    if(item.isSelected() && !members.contains(item.getName()))
+                    {
+                        members.add(item.getName());
+                    }
+                    else if(!item.isSelected()){
+                        if(members.contains(item.getName())) members.remove(item.getName());
+                    }
                 }
-
                 dataSnapshot.getRef().child("members").removeValue(); //brisanje iz firebasea
                 dataSnapshot.getRef().child("members").setValue(members);
                 adapter.notifyDataSetChanged();

@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/home/drazen/Dokumenti/GroupSMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c323c36ecc68965c4cfb460f7721113d2b61ed03">
-        <dex dex="/home/drazen/Dokumenti/GroupSMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_3a7b8676cfbdee0082b36379b4c31bd6e2f27068/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/drazen/Dokumenti/GroupSMS/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="5597104edbc283334364e838ba145b5f4f3dfd42">
         <dex dex="/home/drazen/Dokumenti/GroupSMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c33fa9bacba44da205aa235fcb60ac315192e0b4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/drazen/Dokumenti/GroupSMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c323c36ecc68965c4cfb460f7721113d2b61ed03">
+        <dex dex="/home/drazen/Dokumenti/GroupSMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_3a7b8676cfbdee0082b36379b4c31bd6e2f27068/classes.dex" />
     </item>
 
 </items>

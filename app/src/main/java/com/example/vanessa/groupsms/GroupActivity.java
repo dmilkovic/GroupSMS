@@ -3,6 +3,7 @@ package com.example.vanessa.groupsms;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -82,7 +83,6 @@ public class GroupActivity extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.floating_button);
         fab2 = (FloatingActionButton) findViewById(R.id.button_choose);
-
 
         dref.orderByChild("name").equalTo(group_name).addChildEventListener(new ChildEventListener() {
             @Override
@@ -224,6 +224,7 @@ public class GroupActivity extends AppCompatActivity {
         add = menu.findItem(R.id.add_contacts);
         rename = menu.findItem(R.id.rename_group);
         delete = menu.findItem(R.id.delete_group);
+//        Log.d("tag", "gz" + contacts.toArray()[0].toString());
 
         return super.onCreateOptionsMenu(menu);
     }
