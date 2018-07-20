@@ -4,12 +4,14 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +31,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +41,7 @@ import java.util.List;
 
 public class AddContacts extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
     MenuItem search;
-    String group_name;
+    String group_name = null;
 
     DatabaseReference dref;
 
@@ -61,10 +66,10 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
     ArrayList<String> members;
     ArrayList<String> members_now;
 
+    int members_cnt;
     String uid;
 
     boolean flag;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,11 +273,10 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
         writeNewGroup(group_name);
     }
 
-    private void writeNewGroup(String group_name) {
+
+    private void writeNewGroup(final String group_name) {
         members = new ArrayList<String>();
-
         dref.orderByChild("name").equalTo(group_name).addChildEventListener(new ChildEventListener() {
-
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Group group = dataSnapshot.getValue(Group.class);
@@ -286,7 +290,9 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                     else if(!item.isSelected()){
                         if(members.contains(item.getName())) members.remove(item.getName());
                     }
+                    Log.d("members", " " + members.size());
                 }
+
                 dataSnapshot.getRef().child("members").removeValue(); //brisanje iz firebasea
                 dataSnapshot.getRef().child("members").setValue(members);
                 adapter.notifyDataSetChanged();
@@ -312,6 +318,22 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                // Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
+
+        for(Model item: list ){
+            if(item.isSelected() && !members.contains(item.getName()))
+            {
+                members.add(item.getName());
+            }
+            else if(!item.isSelected()){
+                if(members.contains(item.getName())) members.remove(item.getName());
+            }
+            Log.d("members", " " + members.size());
+        }
+
+        if(members.size() == 0){
+            Toast.makeText(getApplicationContext(), "Add at least one contact", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         finish();
         Intent group = new Intent(AddContacts.this, GroupActivity.class);

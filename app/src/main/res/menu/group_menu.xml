@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/add_contacts"
-        android:title="Add members"
+        android:title="Add/Remove members"
         app:showAsAction="never"/>
 
     <item

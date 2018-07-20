@@ -220,6 +220,10 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
             if(item.isSelected()) contacts.add(item.getName());
         }
 
+        if(contacts.size() == 0){
+            Toast.makeText(getApplicationContext(), "Add at least one contact", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Group group = new Group(group_name,contacts);
         mFirebaseDatabase.child("groups").child(groupId).setValue(group);
         mFirebaseDatabase.child(group_name);
