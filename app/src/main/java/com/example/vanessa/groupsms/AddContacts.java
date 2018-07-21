@@ -171,38 +171,41 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
             while (cursor.moveToNext()) {
                 output = new StringBuffer();
 
-                String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
+                String contact_id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
                 String name = "";
 
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
 
                 if (hasPhoneNumber > 0) {
-                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
+                    Cursor phoneCursor = contentResolver.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{contact_id}, null);
 
                     while (phoneCursor.moveToNext()) {
-                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                        if (phoneNumber.startsWith("09") || phoneNumber.startsWith("+3859")){
-                            number=phoneNumber.replaceAll("-", "");
-                            name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                            flag=true;
-                        }
-                    }
+                        output = new StringBuffer();
+                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        number = phoneNumber.replaceAll("-", "").replaceAll("\\s+", "");
+                        name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
+                      //  Log.d("con", "Name1: " + name);
+                     //   Log.d("con", "Phone Number1: " + phoneNumber);
+                        flag=true;
 
-                    if(flag) {
                         output.append(name);
                         output.append("\n" + number);
+
+                        item = output.toString();
+                        if(!item.isEmpty() && !contactList.contains(item)) {
+                            contactList.add(item);
+                            sublist = contactList.subList(1, contactList.size());
+                            Collections.sort(sublist);
+                        }
                     }
-                    flag=false;
                     phoneCursor.close();
                 }
 
-                // Add the contact to the ArrayList
-                item = output.toString();
-                if(!item.isEmpty()) {
-                    contactList.add(item);
-                    sublist = contactList.subList(1, contactList.size());
-                    Collections.sort(sublist);
-                }
             }
 
             // ListView has to be updated using a ui thread
