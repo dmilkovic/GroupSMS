@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class AddContacts extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
-    MenuItem search;
+    MenuItem search, delete_group;
     String group_name = null;
 
     DatabaseReference dref;
@@ -57,7 +57,7 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
     Cursor cursor;
     int counter;
 
-    MenuItem searchMenuItem;
+    MenuItem searchMenuItem, delete;
     SearchView searchView;
     ArrayAdapter<Model> adapter;
     List<Model> list = new ArrayList<Model>();
@@ -258,11 +258,13 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
+        inflater.inflate(R.menu.add_contacts_menu, menu);
 
         SearchManager searchManager = (SearchManager)
                 getSystemService(Context.SEARCH_SERVICE);
         searchMenuItem = menu.findItem(R.id.search);
+        delete_group = menu.findItem(R.id.delete_group);
+
         searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -270,6 +272,60 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
         searchView.setOnQueryTextListener(this);
 
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_group:
+                AlertDialog.Builder alert = new AlertDialog.Builder(AddContacts.this);
+//                alert.setTitle("Alert!");
+                alert.setMessage("Are you sure you want to delete group?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
+
+                        Query applesQuery = dref.orderByChild("name").equalTo(group_name);
+                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e("TAG", "onCancelled", databaseError.toException());
+                            }
+                        });
+                        dialog.dismiss();
+                        Intent intent = new Intent(AddContacts.this, MainActivity.class);
+                        startActivity(intent);
+
+                    }
+                });
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void addMembers(View view) {
