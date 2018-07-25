@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,8 +30,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQueryTextListener {
     MenuItem search, add;
@@ -37,14 +42,14 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     DatabaseReference dref;
     DatabaseReference dref2;
 
-    ListView listview;
-    ArrayList<String> list=new ArrayList<>();
+    ListView lv;
+    ArrayList<HashMap<String, String>> list = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
     MenuItem searchMenuItem;
     SearchView searchView;
 
-    ArrayAdapter<String> adapter;
+    private SimpleAdapter adapter;
 
     String content=null;
     String group_name=null;
@@ -68,9 +73,9 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         Bundle extras = getIntent().getExtras();
         group_name = extras.getString("group_name");
 
-        listview = (ListView) findViewById(R.id.list);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
+        lv = (ListView) findViewById(R.id.list);
+       /* adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        lv.setAdapter(adapter);*/
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -84,8 +89,16 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Template template = dataSnapshot.getValue(Template.class);
-                list.add(template.getTitle());
-                adapter.notifyDataSetChanged();
+
+                HashMap<String, String> object = new HashMap<>();
+                object.put("name", template.getTitle());
+                object.put("message", template.getContent());
+                Log.d("object", object.get("name") + object.get("message"));
+                //list.add("name", template.getTitle());
+                list.add(object);
+                ///list.add(template.getContent());
+                refreshAdapter();
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -108,7 +121,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             }
         });
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+     /*   listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
@@ -138,7 +151,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
             }
         });
-
+*/
         dref2.orderByChild("name").equalTo(group_name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -164,6 +177,90 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         });
     }
 
+    private void refreshAdapter(){
+        adapter = new SimpleAdapter(this.getApplicationContext(), list,
+                R.layout.contetnt_template, new String[]{"name", "message"},
+                new int[]{R.id.name, R.id.message});
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
+                final String title = object.get("name");
+                dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Template template = dataSnapshot.getValue(Template.class);
+                        content = template.getContent();
+
+                        showTemplate(content);
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View arg1, int position, long id)  {
+
+                HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
+                final String template= object.get("name");
+                final int index = position;
+                AlertDialog.Builder alert = new AlertDialog.Builder(ChooseTemplate.this);
+//                alert.setTitle("Alert!");
+                alert.setMessage("Are you sure you want to delete this template?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
+
+                        Query applesQuery = dref.orderByChild("title").equalTo(template);
+                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "onCancelled", databaseError.toException());
+                            }
+                        });
+                        list.remove(index); //brisanje samo iz arraya, ne iz firebasea
+                        adapter.notifyDataSetChanged();
+
+                        dialog.dismiss();
+
+                    }
+                });
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                return true;
+            }
+        });
+    }
     String new_content="";
 
     public void showTemplate(String content){
