@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,6 +46,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
     ListView lv;
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
+   // ArrayList<HashMap<String, String>> newList = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
     MenuItem searchMenuItem;
@@ -54,6 +57,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     String content=null;
     String group_name=null;
 
+    EditText edit_title;
     EditText edit_content;
     String message;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0 ;
@@ -84,42 +88,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
         dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
         dref2=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("groups");
-
-        dref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Template template = dataSnapshot.getValue(Template.class);
-
-                HashMap<String, String> object = new HashMap<>();
-                object.put("name", template.getTitle());
-                object.put("message", template.getContent());
-                Log.d("object", object.get("name") + object.get("message"));
-                //list.add("name", template.getTitle());
-                list.add(object);
-                ///list.add(template.getContent());
-                refreshAdapter();
-                //adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Template template = dataSnapshot.getValue(Template.class);
-                list.remove(template.getTitle());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        getData();
 
      /*   listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -177,11 +146,145 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         });
     }
 
+    //public ArrayList<HashMap<String, String>> getData()
+    public void getData()
+    {
+        //newList.clear();
+        dref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Template template = dataSnapshot.getValue(Template.class);
+
+                HashMap<String, String> object = new HashMap<>();
+                object.put("name", template.getTitle());
+                object.put("message", template.getContent());
+                Log.d("object", object.get("name") + object.get("message"));
+                //list.add("name", template.getTitle());
+                list.add(object);
+                ///list.add(template.getContent());
+                refreshAdapter();
+                //adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Template template = dataSnapshot.getValue(Template.class);
+                list.remove(template.getTitle());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        //return newList;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.template_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final int listPosition = info.position;
+        switch (item.getItemId()){
+            case R.id.delete:
+
+                final String template = list.get(listPosition).get("name");
+
+               // final int index = position;
+                AlertDialog.Builder alert = new AlertDialog.Builder(ChooseTemplate.this);
+//                alert.setTitle("Alert!");
+                alert.setMessage("Are you sure you want to delete this template?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
+
+                        Query applesQuery = dref.orderByChild("title").equalTo(template);
+                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "onCancelled", databaseError.toException());
+                            }
+                        });
+                        list.remove(listPosition); //brisanje samo iz arraya, ne iz firebasea
+                        adapter.notifyDataSetChanged();
+
+                        dialog.dismiss();
+
+                    }
+                });
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+
+                return true;
+            case R.id.edit:
+                Toast.makeText(getApplicationContext(), "Edit.", Toast.LENGTH_LONG).show();
+
+                final String title1 = list.get(listPosition).get("name");
+                Log.d("title", title1);
+                dref.orderByChild("title").equalTo(title1).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Template template1 = dataSnapshot.getValue(Template.class);
+                        content = template1.getContent();
+
+                        showEditTemplate(title1, content);
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+                return true;
+            default:  return super.onContextItemSelected(item);
+
+        }
+    }
+
     private void refreshAdapter(){
         adapter = new SimpleAdapter(this.getApplicationContext(), list,
                 R.layout.contetnt_template, new String[]{"name", "message"},
                 new int[]{R.id.name, R.id.message});
         lv.setAdapter(adapter);
+        registerForContextMenu(lv);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
@@ -191,8 +294,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Template template = dataSnapshot.getValue(Template.class);
                         content = template.getContent();
-
-                        showTemplate(content);
+                        showTemplate(content, template.getTitle());
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -211,7 +313,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             }
         });
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+       /* lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View arg1, int position, long id)  {
 
                 HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
@@ -259,11 +361,11 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 alert.show();
                 return true;
             }
-        });
+        });*/
     }
     String new_content="";
 
-    public void showTemplate(String content){
+    public void showTemplate(String content, String title){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
@@ -280,6 +382,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         edit_content.setMaxLines(5);
         edit_content.setGravity(Gravity.LEFT | Gravity.TOP);
         edit_content.setHorizontalScrollBarEnabled(false);
+
         dialogBuilder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -299,9 +402,132 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 //pass
             }
         });
+
+        final String title1 = title;
+        dialogBuilder.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.d("title", title1);
+                dref.orderByChild("title").equalTo(title1).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Template template1 = dataSnapshot.getValue(Template.class);
+                        new_content = template1.getContent();
+
+                        showEditTemplate(title1, new_content);
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+            }
+        });
+
         AlertDialog b = dialogBuilder.create();
         b.show();
     }
+
+    String new_title="";
+    String oldTitle="";
+
+    public void showEditTemplate(String title, String content){
+        oldTitle=title;
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
+        dialogBuilder.setView(dialogView);
+
+        edit_title = (EditText) dialogView.findViewById(R.id.title);
+        edit_content = (EditText) dialogView.findViewById(R.id.content);
+
+        edit_title.setText(title);
+        edit_content.setText(content);
+
+        dialogBuilder.setTitle("New template");
+
+        //dialogBuilder.setMessage("Title:");
+        edit_title.setSingleLine(true);
+        edit_title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
+        edit_title.setGravity(Gravity.LEFT | Gravity.TOP);
+        edit_title.setHint("Title...");
+
+        edit_content.setSingleLine(false);
+        edit_content.setHint("Content...");
+        edit_content.setLines(4);
+        edit_content.setMaxLines(5);
+        edit_content.setGravity(Gravity.LEFT | Gravity.TOP);
+        edit_content.setHorizontalScrollBarEnabled(false);
+
+
+       dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+//                Query applesQuery = dref.orderByChild("title").equalTo(oldTitle);
+//                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+//                            appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Log.e(TAG, "onCancelled", databaseError.toException());
+//                    }
+//                });
+
+                new_title = edit_title.getText().toString();
+                new_content = edit_content.getText().toString();
+
+                final Query applesQuery = dref.orderByChild("title").equalTo(oldTitle);
+                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
+                            appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+               //NE RADI
+               /* list.clear();
+                list.addAll(getData());
+                adapter.notifyDataSetChanged();*/
+
+                Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
+                templates.putExtra("group_name", group_name);
+                startActivity(templates);
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+    }
+
+
 
     public void sendMessage(String new_content){
         SmsManager sms = SmsManager.getDefault();
