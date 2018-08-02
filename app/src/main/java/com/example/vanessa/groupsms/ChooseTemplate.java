@@ -188,6 +188,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         //return newList;
     }
 
+    /*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -276,7 +277,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             default:  return super.onContextItemSelected(item);
 
         }
-    }
+    }*/
 
     private void refreshAdapter(){
         adapter = new SimpleAdapter(this.getApplicationContext(), list,
@@ -294,7 +295,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Template template = dataSnapshot.getValue(Template.class);
                         content = template.getContent();
-                        showTemplate(content, template.getTitle());
+                        //showTemplate(content, template.getTitle());
+                        showTemplate(template);
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -365,11 +367,12 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     }
     String new_content="";
 
-    public void showTemplate(String content, String title){
+    public void showTemplate(Template template){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
         dialogBuilder.setView(dialogView);
+
 
         edit_content = (EditText) dialogView.findViewById(R.id.edit1);
 
@@ -402,8 +405,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 //pass
             }
         });
-
-        final String title1 = title;
+        content = template.getContent();
+        final String title1 = template.getTitle();
         dialogBuilder.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Log.d("title", title1);
@@ -413,7 +416,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                         Template template1 = dataSnapshot.getValue(Template.class);
                         new_content = template1.getContent();
 
-                        showEditTemplate(title1, new_content);
+                        showEditTemplate(template1);
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -439,7 +442,10 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     String new_title="";
     String oldTitle="";
 
-    public void showEditTemplate(String title, String content){
+    public void showEditTemplate(final Template template){
+        final String title = template.getTitle();
+        String content = template.getContent();
+
         oldTitle=title;
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -523,6 +529,58 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 //pass
             }
         });
+
+
+        dialogBuilder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+               /* AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//                alert.setTitle("Alert!");
+                alert.setTitle("Are you sure you want to delete this template?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {*/
+                        //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
+
+                        Query applesQuery = dref.orderByChild("title").equalTo(title);
+                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "onCancelled", databaseError.toException());
+                            }
+                        });
+                        list.remove(template); //brisanje samo iz arraya, ne iz firebasea
+
+                       /* adapter.notifyDataSetChanged();
+                        refreshAdapter();*/
+                        Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
+                        templates.putExtra("group_name", group_name);
+                        startActivity(templates);
+                    }
+              /*  });
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+            }*/
+
+
+        });
+
         AlertDialog b = dialogBuilder.create();
         b.show();
     }
