@@ -1,15 +1,21 @@
 package com.example.vanessa.groupsms;
 
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.AlertDialog;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,12 +23,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,11 +57,19 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
     ListView lv;
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    ArrayList<HashMap<String, String>> multiselect_list = new ArrayList<>();
    // ArrayList<HashMap<String, String>> newList = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
     MenuItem searchMenuItem;
     SearchView searchView;
+
+    Menu context_menu;
+   // MultiSelectAdapter multiSelectAdapter;
+    ActionMode mActionMode;
+    SimpleAdapter.ViewBinder binder;
+
+    boolean isMultiSelect = false;
 
     private SimpleAdapter adapter;
 
@@ -78,6 +97,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         group_name = extras.getString("group_name");
 
         lv = (ListView) findViewById(R.id.list);
+        lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        lv.setMultiChoiceModeListener(modeListener);
        /* adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
         lv.setAdapter(adapter);*/
 
@@ -188,6 +209,45 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         //return newList;
     }
 
+    AbsListView.MultiChoiceModeListener modeListener = new AbsListView.MultiChoiceModeListener() {
+        @Override
+        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
+
+        }
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = actionMode.getMenuInflater();
+            inflater.inflate(R.menu.delete_templates_menu, menu);
+            isMultiSelect = true;
+            mActionMode = actionMode;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            switch (menuItem.getItemId())
+            {
+                case R.id.action_delete:
+                    removeItems(multiselect_list);
+                    actionMode.finish();
+                    return true;
+                default: return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            isMultiSelect = false;
+            mActionMode = null;
+            multiselect_list.clear();
+        }
+    };
     /*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -282,43 +342,98 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     private void refreshAdapter(){
         adapter = new SimpleAdapter(this.getApplicationContext(), list,
                 R.layout.contetnt_template, new String[]{"name", "message"},
-                new int[]{R.id.name, R.id.message});
+                new int[]{R.id.name, R.id.message}) {
+            @Override
+            public View getView (int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                checkBox.setTag(position);
+                if(isMultiSelect)
+                {
+                    checkBox.setVisibility(View.VISIBLE);
+                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            int position = (int)compoundButton.getTag();
+                            if (multiselect_list.contains(list.get(position)))
+                            {
+                                multiselect_list.remove(list.get(position));
+                            }
+                            else
+                            {
+                                multiselect_list.add(list.get(position));
+                            }
+
+                            if (multiselect_list.size() > 0) {
+                                mActionMode.setTitle("" + multiselect_list.size());
+                            }
+                            else
+                            {
+                                mActionMode.setTitle("");
+                            }
+
+                        }
+                    });
+                }else{
+                    checkBox.setVisibility(View.GONE);
+                }
+                return view;
+            }
+        };
+
         lv.setAdapter(adapter);
-        registerForContextMenu(lv);
+       // registerForContextMenu(lv);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
-                final String title = object.get("name");
-                dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Template template = dataSnapshot.getValue(Template.class);
-                        content = template.getContent();
-                        //showTemplate(content, template.getTitle());
-                        showTemplate(template);
-                    }
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    }
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                if (!isMultiSelect)
+                {
+                    HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
+                    final String title = object.get("name");
+                    dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            Template template = dataSnapshot.getValue(Template.class);
+                            content = template.getContent();
+                            //showTemplate(content, template.getTitle());
 
+                            showTemplate(template);
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
+                }
             }
         });
 
-       /* lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View arg1, int position, long id)  {
+       lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View arg1, int position, long id) {
+                /*if (!isMultiSelect) {
+                    multiselect_list = new ArrayList();
+                    isMultiSelect = true;
 
-                HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
+                    if (mActionMode == null) {
+                        mActionMode = startActionMode(mActionModeCallback);
+                    }
+                }
+                multi_select(position);*/
+
+               /* HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
                 final String template= object.get("name");
                 final int index = position;
                 AlertDialog.Builder alert = new AlertDialog.Builder(ChooseTemplate.this);
@@ -361,10 +476,12 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     }
                 });
                 alert.show();
+               */
                 return true;
             }
-        });*/
+        });
     }
+
     String new_content="";
 
     public void showTemplate(Template template){
@@ -585,8 +702,6 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         b.show();
     }
 
-
-
     public void sendMessage(String new_content){
         SmsManager sms = SmsManager.getDefault();
         message = new_content;
@@ -663,4 +778,99 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         adapter.getFilter().filter(newText);
         return false;
     }
+
+    private String template_title = "";
+    private String template_content = "";
+    private String templateId;
+
+    public void add(View view){
+        android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText title = (EditText) dialogView.findViewById(R.id.title);
+        final EditText content = (EditText) dialogView.findViewById(R.id.content);
+
+        dialogBuilder.setTitle("New template");
+
+        //dialogBuilder.setMessage("Title:");
+        title.setSingleLine(true);
+        title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
+        title.setGravity(Gravity.LEFT | Gravity.TOP);
+        title.setHint("Title...");
+
+        content.setSingleLine(false);
+        content.setHint("Content...");
+        content.setLines(4);
+        content.setMaxLines(5);
+        content.setGravity(Gravity.LEFT | Gravity.TOP);
+        content.setHorizontalScrollBarEnabled(false);
+        dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                template_title = title.getText().toString();
+                template_content = content.getText().toString();
+
+
+                if((template_title.isEmpty() || !(template_title.trim().length() > 0)) && (template_content.isEmpty() || !(template_content.trim().length() > 0))) {
+                    Toast.makeText(getApplicationContext(), "Template can't be empty. ", Toast.LENGTH_SHORT).show();
+                }else if (template_content.isEmpty() || !(template_content.trim().length() > 0)){
+                    Toast.makeText(getApplicationContext(), "Template content can't be empty. ", Toast.LENGTH_SHORT).show();
+                }else if (template_title.isEmpty() || !(template_title.trim().length() > 0)) {
+                    Toast.makeText(getApplicationContext(), "Template title can't be empty. ", Toast.LENGTH_SHORT).show();
+                }else{
+                    dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+                    templateId= dref.push().getKey();
+
+                    Template template = new Template(template_title, template_content);
+                    dref.child("templates").child(templateId).setValue(template);
+                    dref.child(template_title);
+
+                }
+                finish();
+                Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
+                templates.putExtra("group_name", group_name);
+                startActivity(templates);
+
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        android.support.v7.app.AlertDialog b = dialogBuilder.create();
+        b.show();
+
+    }
+
+
+   public void removeItems(ArrayList<HashMap<String, String>> selectedItems)
+   {
+       for(HashMap<String, String> item : selectedItems)
+       {
+           final String template = item.get("name");
+           Query applesQuery = dref.orderByChild("title").equalTo(template);
+           applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+                   for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                       appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                   }
+               }
+
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
+                   Log.e(TAG, "onCancelled", databaseError.toException());
+               }
+           });
+           list.remove(item); //brisanje samo iz arraya, ne iz firebasea
+       }
+       adapter.notifyDataSetChanged();
+     //  refreshAdapter();
+   }
 }

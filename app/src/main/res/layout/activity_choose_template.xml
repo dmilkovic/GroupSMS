@@ -20,10 +20,26 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/> -->
 
-    <include
-        layout="@layout/contetnt_template"
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        >
+    </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:onClick="add"
+        app:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_add_white_24dp"
+        app:elevation="4dp" />
 
     <!--<TextView-->
     <!--android:id="@+id/text_main"-->
