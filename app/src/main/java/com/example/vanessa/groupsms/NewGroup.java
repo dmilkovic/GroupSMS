@@ -127,34 +127,7 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
                 String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
                 String name="";
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
-
-                /*if (hasPhoneNumber > 0) {
-                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
-
-                    while (phoneCursor.moveToNext()) {
-                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                        if (phoneNumber.startsWith("09") || phoneNumber.startsWith("+3859")){
-                            number=phoneNumber.replaceAll("-", "");
-                            name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                            flag=true;
-                        }
-                    }
-
-                    if(flag) {
-                        output.append(name);
-                        output.append("\n" + number);
-                    }
-                    flag=false;
-                    phoneCursor.close();
-                }
-
-                // Add the contact to the ArrayList
-                item = output.toString();
-
-                if(!item.isEmpty()) {
-                    sublist.add(item);
-                    Collections.sort(sublist);
-                }*/
+                
                 if (hasPhoneNumber > 0) {
                     Cursor phoneCursor = contentResolver.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -186,9 +159,6 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
                 }
 
             }
-           /* for(String element: sublist){
-                list.add(new Model(element));
-            }*/
 
             runOnUiThread(new Runnable() {
 
