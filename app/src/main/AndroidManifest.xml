@@ -41,7 +41,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".ChooseTemplate">
+        <activity android:name=".ChooseTemplate"
+            >
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

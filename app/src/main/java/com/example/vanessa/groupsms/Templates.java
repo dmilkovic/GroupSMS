@@ -5,18 +5,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -42,31 +48,41 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     DatabaseReference dref;
     ListView lv;
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    ArrayList<HashMap<String, String>> multiselect_list = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
     MenuItem searchMenuItem;
     SearchView searchView;
 
+    ActionMode mActionMode;
+
     private SimpleAdapter adapter;
 
     private String templateId;
 
+    boolean isMultiSelect = false;
     boolean flag = false;
     String content=null;
 
     EditText edit_title;
     EditText edit_content;
+    FloatingActionButton fab;
 
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_templates);
         setTitle("Templates");
 
         lv=(ListView)findViewById(R.id.list);
+        lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        lv.setMultiChoiceModeListener(modeListener);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        fab = (FloatingActionButton)findViewById(R.id.add_button2);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -194,41 +210,138 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 //        }
 //    }
 
+    AbsListView.MultiChoiceModeListener modeListener = new AbsListView.MultiChoiceModeListener() {
+        @Override
+        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
 
+        }
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = actionMode.getMenuInflater();
+            inflater.inflate(R.menu.delete_templates_menu, menu);
+            isMultiSelect = true;
+            mActionMode = actionMode;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            final ActionMode act = actionMode;
+            switch (menuItem.getItemId())
+            {
+                case R.id.action_delete:
+                    android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(Templates.this);
+                    alert.setMessage("Are you sure you want to delete selected templates?");
+                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            removeItems(multiselect_list);
+                            act.finish();
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
+                    return true;
+                default: return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            isMultiSelect = false;
+            mActionMode = null;
+            multiselect_list.clear();
+        }
+    };
 
     private void refreshAdapter(){
         adapter = new SimpleAdapter(this.getApplicationContext(), list,
                 R.layout.contetnt_template, new String[]{"name", "message"},
-                new int[]{R.id.name, R.id.message});
+                new int[]{R.id.name, R.id.message}) {
+            @Override
+            public View getView (int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                checkBox.setTag(position);
+                if(isMultiSelect)
+                {
+                    fab.setVisibility(View.GONE);
+                    checkBox.setVisibility(View.VISIBLE);
+                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            int position = (int)compoundButton.getTag();
+                            if (multiselect_list.contains(list.get(position)))
+                            {
+                                multiselect_list.remove(list.get(position));
+                            }
+                            else
+                            {
+                                multiselect_list.add(list.get(position));
+                            }
+
+                            if (multiselect_list.size() > 0) {
+                                mActionMode.setTitle("" + multiselect_list.size());
+                            }
+                            else
+                            {
+                                mActionMode.setTitle("");
+                            }
+
+                        }
+                    });
+                }else{
+                    checkBox.setVisibility(View.GONE);
+                    fab.setVisibility(View.VISIBLE);
+                }
+                return view;
+            }
+        };
+
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
-                final String title = object.get("name");
+                if(!isMultiSelect)
+                {
+                    HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
+                    final String title = object.get("name");
 
-                dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Template template = dataSnapshot.getValue(Template.class);
-                        content = template.getContent();
+                    dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            Template template = dataSnapshot.getValue(Template.class);
+                            content = template.getContent();
 
-                        showTemplate(title,content);
-                    }
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    }
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
+                            showTemplate(title,content);
+                        }
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        }
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        }
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
             }
         });
 
@@ -236,7 +349,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long arg3) {
 
-                HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
+                /*HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
                 final String template= object.get("name");
                 final int index = position;
                 AlertDialog.Builder alert = new AlertDialog.Builder(Templates.this);
@@ -279,7 +392,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                     }
                 });
 
-                alert.show();
+                alert.show();*/
                 return true;
             }
         });
@@ -355,11 +468,10 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                         Log.e(TAG, "onCancelled", databaseError.toException());
                     }
                 });
-
-
                 Intent templates = new Intent(Templates.this, Templates.class);
                 startActivity(templates);
 
+              //adapter.notifyDataSetChanged();
             }
         });
 
@@ -372,12 +484,6 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         b.show();
     }
 
-    @Override
-    public boolean onSupportNavigateUp(){
-        Intent main = new Intent(Templates.this, MainActivity.class);
-        startActivity(main);
-        return true;
-    }
 
     @Override
     public void onBackPressed(){
@@ -406,6 +512,9 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -461,9 +570,10 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
                 }
                 finish();
+                /*adapter.notifyDataSetChanged();
+                refreshAdapter();*/
                 Intent templates = new Intent(Templates.this, Templates.class);
                 startActivity(templates);
-
             }
         });
 
@@ -489,5 +599,37 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     public boolean onQueryTextChange(String newText) {
         adapter.getFilter().filter(newText);
         return false;
+    }
+
+    public void removeItems(ArrayList<HashMap<String, String>> selectedItems)
+    {
+        for(HashMap<String, String> item : selectedItems)
+        {
+            deleteItem(item);
+        }
+        //adapter.notifyDataSetChanged();
+        //  refreshAdapter();
+    }
+
+    public void deleteItem(HashMap<String, String> item)
+    {
+        final String template = item.get("name");
+        Query applesQuery = dref.orderByChild("title").equalTo(template);
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+        list.remove(item); //brisanje samo iz arraya, ne iz firebasea
+        adapter.notifyDataSetChanged();
     }
 }

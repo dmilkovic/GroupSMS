@@ -36,7 +36,8 @@
                 android:gravity="center"
                 android:focusableInTouchMode="false"
                 android:layout_weight="0.1"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:theme="@style/AppTheme">
             </CheckBox>
 
         </LinearLayout>

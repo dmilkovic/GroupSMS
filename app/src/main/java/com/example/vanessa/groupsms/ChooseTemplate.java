@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.AlertDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
@@ -49,6 +50,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.view.View.GONE;
+
 public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQueryTextListener {
     MenuItem search, add;
 
@@ -84,11 +87,11 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     ArrayList<String> contacts=new ArrayList<>();
     ArrayList<String> numbers=new ArrayList<>();
 
+    FloatingActionButton fab;
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_template);
         setTitle("Choose template");
@@ -99,6 +102,10 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         lv = (ListView) findViewById(R.id.list);
         lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         lv.setMultiChoiceModeListener(modeListener);
+
+        fab = (FloatingActionButton)findViewById(R.id.add_button2);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        /* adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
         lv.setAdapter(adapter);*/
 
@@ -231,11 +238,28 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
         @Override
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            final ActionMode act = actionMode;
             switch (menuItem.getItemId())
             {
                 case R.id.action_delete:
-                    removeItems(multiselect_list);
-                    actionMode.finish();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ChooseTemplate.this);
+                    alert.setMessage("Are you sure you want to delete selected templates?");
+                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            removeItems(multiselect_list);
+                            act.finish();
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
                     return true;
                 default: return false;
             }
@@ -350,6 +374,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 checkBox.setTag(position);
                 if(isMultiSelect)
                 {
+                    fab.setVisibility(GONE);
                     checkBox.setVisibility(View.VISIBLE);
                     checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
@@ -375,7 +400,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                         }
                     });
                 }else{
-                    checkBox.setVisibility(View.GONE);
+                    checkBox.setVisibility(GONE);
+                    fab.setVisibility(View.VISIBLE);
                 }
                 return view;
             }
@@ -659,7 +685,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     public void onClick(DialogInterface dialog, int which) {*/
                         //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
 
-                        Query applesQuery = dref.orderByChild("title").equalTo(title);
+                       /* Query applesQuery = dref.orderByChild("title").equalTo(title);
                         applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
@@ -676,11 +702,15 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                         });
                         list.remove(template); //brisanje samo iz arraya, ne iz firebasea
 
-                       /* adapter.notifyDataSetChanged();
-                        refreshAdapter();*/
-                        Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
+                        /*Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
                         templates.putExtra("group_name", group_name);
-                        startActivity(templates);
+                        startActivity(templates);*/
+
+                        HashMap<String, String> object = new HashMap<>();
+                        object.put("name", template.getTitle());
+                        object.put("message", template.getContent());
+                        deleteItem(object);
+
                     }
               /*  });
                 alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -736,11 +766,6 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 //        return;
 //    }
 
-    @Override
-    public boolean onSupportNavigateUp(){
-        finish();
-        return true;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -763,6 +788,9 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -847,30 +875,35 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
     }
 
-
    public void removeItems(ArrayList<HashMap<String, String>> selectedItems)
    {
        for(HashMap<String, String> item : selectedItems)
        {
-           final String template = item.get("name");
-           Query applesQuery = dref.orderByChild("title").equalTo(template);
-           applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-
-               @Override
-               public void onDataChange(DataSnapshot dataSnapshot) {
-                   for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                       appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
-                   }
-               }
-
-               @Override
-               public void onCancelled(DatabaseError databaseError) {
-                   Log.e(TAG, "onCancelled", databaseError.toException());
-               }
-           });
-           list.remove(item); //brisanje samo iz arraya, ne iz firebasea
+           deleteItem(item);
        }
-       adapter.notifyDataSetChanged();
+       //adapter.notifyDataSetChanged();
      //  refreshAdapter();
    }
+
+    public void deleteItem(HashMap<String, String> item)
+    {
+        final String template = item.get("name");
+        Query applesQuery = dref.orderByChild("title").equalTo(template);
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+        list.remove(item); //brisanje samo iz arraya, ne iz firebasea
+        adapter.notifyDataSetChanged();
+    }
 }
