@@ -10,14 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5137cdff-3b8a-4972-bb59-0e1e475c272f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -61,47 +57,87 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
+      <file leaf-file-name="NewGroup.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="515" column="12" lean-forward="false" selection-start-line="515" selection-start-column="8" selection-end-line="515" selection-end-column="12" />
+            <state relative-caret-position="333">
+              <caret line="202" column="21" lean-forward="false" selection-start-line="202" selection-start-column="21" selection-end-line="202" selection-end-column="21" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5749#7842#0" expanded="true" />
-                <element signature="e#7841#7842#0" expanded="true" />
-                <element signature="e#8604#8605#0" expanded="true" />
-                <element signature="e#8640#8641#0" expanded="true" />
-                <element signature="e#9115#9464#0" expanded="true" />
-                <element signature="e#9463#9464#0" expanded="true" />
-                <element signature="e#9517#9766#0" expanded="true" />
-                <element signature="e#9765#9766#0" expanded="true" />
-                <element signature="e#11138#12152#0" expanded="true" />
-                <element signature="e#12151#12152#0" expanded="true" />
-                <element signature="e#12435#12992#0" expanded="true" />
-                <element signature="e#12991#12992#0" expanded="true" />
-                <element signature="e#13040#15133#0" expanded="true" />
-                <element signature="e#15132#15133#0" expanded="true" />
-                <element signature="e#16115#16493#0" expanded="true" />
-                <element signature="e#16492#16493#0" expanded="true" />
-                <element signature="e#17292#17942#0" expanded="true" />
-                <element signature="e#17941#17942#0" expanded="true" />
-                <element signature="e#17989#18176#0" expanded="true" />
-                <element signature="e#18175#18176#0" expanded="true" />
-                <element signature="e#18466#18467#0" expanded="true" />
-                <element signature="e#18494#18495#0" expanded="true" />
+                <element signature="e#6888#7514#0" expanded="true" />
+                <element signature="e#7513#7514#0" expanded="true" />
+                <element signature="e#7622#7771#0" expanded="true" />
+                <element signature="e#7770#7771#0" expanded="true" />
+                <element signature="e#8558#8559#0" expanded="true" />
+                <element signature="e#8599#8600#0" expanded="true" />
+                <element signature="e#9596#9597#0" expanded="true" />
+                <element signature="e#9624#9625#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Templates.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
+      <file leaf-file-name="AddContacts.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="82" column="62" lean-forward="false" selection-start-line="82" selection-start-column="62" selection-end-line="82" selection-end-column="62" />
+            <state relative-caret-position="933">
+              <caret line="219" column="38" lean-forward="false" selection-start-line="219" selection-start-column="27" selection-end-line="219" selection-end-column="38" />
+              <folding>
+                <element signature="e#7281#8454#0" expanded="true" />
+                <element signature="e#8453#8454#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add_contacts_menu.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/add_contacts_menu.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="group_menu.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_add_contacts.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_add_contacts.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contacts_list_item.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -121,73 +157,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="67" lean-forward="false" selection-start-line="8" selection-start-column="67" selection-end-line="8" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_choose_template.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_choose_template.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="36" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="content_group_item.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="35" column="38" lean-forward="false" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="content_templates.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_templates.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="contetnt_template.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="585">
               <caret line="39" column="31" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -222,8 +196,8 @@
       <find>onSupportNavigateUp</find>
       <find>them</find>
       <find>onA</find>
-      <find>removeItems</find>
       <find>list</find>
+      <find>removeItems</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2272,6 +2246,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java" />
       </list>
     </option>
   </component>
@@ -2579,94 +2556,34 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="42" lean-forward="false" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="72" lean-forward="false" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5430">
-          <caret line="416" column="35" lean-forward="false" selection-start-line="416" selection-start-column="20" selection-end-line="416" selection-end-column="114" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#31987#31988#0" expanded="true" />
-            <element signature="e#32015#32016#0" expanded="true" />
-            <element signature="e#33389#35013#0" expanded="true" />
-            <element signature="e#35012#35013#0" expanded="true" />
-            <element signature="e#35067#35228#0" expanded="true" />
-            <element signature="e#35227#35228#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4230">
           <caret line="334" column="50" lean-forward="false" selection-start-line="334" selection-start-column="50" selection-end-line="334" selection-end-column="50" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5749#7842#0" expanded="true" />
-            <element signature="e#7841#7842#0" expanded="true" />
-            <element signature="e#8604#8605#0" expanded="true" />
-            <element signature="e#8640#8641#0" expanded="true" />
-            <element signature="e#9115#9464#0" expanded="true" />
-            <element signature="e#9463#9464#0" expanded="true" />
-            <element signature="e#9517#9766#0" expanded="true" />
-            <element signature="e#9765#9766#0" expanded="true" />
-            <element signature="e#11138#12152#0" expanded="true" />
-            <element signature="e#12151#12152#0" expanded="true" />
-            <element signature="e#12435#12992#0" expanded="true" />
-            <element signature="e#12991#12992#0" expanded="true" />
-            <element signature="e#13040#15133#0" expanded="true" />
-            <element signature="e#15132#15133#0" expanded="true" />
-            <element signature="e#16115#16493#0" expanded="true" />
-            <element signature="e#16492#16493#0" expanded="true" />
-            <element signature="e#17292#17942#0" expanded="true" />
-            <element signature="e#17941#17942#0" expanded="true" />
-            <element signature="e#17989#18176#0" expanded="true" />
-            <element signature="e#18175#18176#0" expanded="true" />
-            <element signature="e#18466#18467#0" expanded="true" />
-            <element signature="e#18494#18495#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#5749#7842#0" expanded="false" />
+            <element signature="e#7841#7842#0" expanded="false" />
+            <element signature="e#8604#8605#0" expanded="false" />
+            <element signature="e#8640#8641#0" expanded="false" />
+            <element signature="e#9115#9464#0" expanded="false" />
+            <element signature="e#9463#9464#0" expanded="false" />
+            <element signature="e#9517#9766#0" expanded="false" />
+            <element signature="e#9765#9766#0" expanded="false" />
+            <element signature="e#11138#12152#0" expanded="false" />
+            <element signature="e#12151#12152#0" expanded="false" />
+            <element signature="e#12435#12992#0" expanded="false" />
+            <element signature="e#12991#12992#0" expanded="false" />
+            <element signature="e#13040#15133#0" expanded="false" />
+            <element signature="e#15132#15133#0" expanded="false" />
+            <element signature="e#16115#16493#0" expanded="false" />
+            <element signature="e#16492#16493#0" expanded="false" />
+            <element signature="e#17292#17942#0" expanded="false" />
+            <element signature="e#17941#17942#0" expanded="false" />
+            <element signature="e#17989#18176#0" expanded="false" />
+            <element signature="e#18175#18176#0" expanded="false" />
+            <element signature="e#18466#18467#0" expanded="false" />
+            <element signature="e#18494#18495#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2769,29 +2686,29 @@
         <state relative-caret-position="3465">
           <caret line="283" column="10" lean-forward="true" selection-start-line="283" selection-start-column="10" selection-end-line="283" selection-end-column="10" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5749#7842#0" expanded="true" />
-            <element signature="e#7841#7842#0" expanded="true" />
-            <element signature="e#8604#8605#0" expanded="true" />
-            <element signature="e#8640#8641#0" expanded="true" />
-            <element signature="e#9115#9464#0" expanded="true" />
-            <element signature="e#9463#9464#0" expanded="true" />
-            <element signature="e#9517#9766#0" expanded="true" />
-            <element signature="e#9765#9766#0" expanded="true" />
-            <element signature="e#11138#12152#0" expanded="true" />
-            <element signature="e#12151#12152#0" expanded="true" />
-            <element signature="e#12435#12992#0" expanded="true" />
-            <element signature="e#12991#12992#0" expanded="true" />
-            <element signature="e#13040#15133#0" expanded="true" />
-            <element signature="e#15132#15133#0" expanded="true" />
-            <element signature="e#16115#16493#0" expanded="true" />
-            <element signature="e#16492#16493#0" expanded="true" />
-            <element signature="e#17292#17942#0" expanded="true" />
-            <element signature="e#17941#17942#0" expanded="true" />
-            <element signature="e#17989#18176#0" expanded="true" />
-            <element signature="e#18175#18176#0" expanded="true" />
-            <element signature="e#18466#18467#0" expanded="true" />
-            <element signature="e#18494#18495#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#5749#7842#0" expanded="false" />
+            <element signature="e#7841#7842#0" expanded="false" />
+            <element signature="e#8604#8605#0" expanded="false" />
+            <element signature="e#8640#8641#0" expanded="false" />
+            <element signature="e#9115#9464#0" expanded="false" />
+            <element signature="e#9463#9464#0" expanded="false" />
+            <element signature="e#9517#9766#0" expanded="false" />
+            <element signature="e#9765#9766#0" expanded="false" />
+            <element signature="e#11138#12152#0" expanded="false" />
+            <element signature="e#12151#12152#0" expanded="false" />
+            <element signature="e#12435#12992#0" expanded="false" />
+            <element signature="e#12991#12992#0" expanded="false" />
+            <element signature="e#13040#15133#0" expanded="false" />
+            <element signature="e#15132#15133#0" expanded="false" />
+            <element signature="e#16115#16493#0" expanded="false" />
+            <element signature="e#16492#16493#0" expanded="false" />
+            <element signature="e#17292#17942#0" expanded="false" />
+            <element signature="e#17941#17942#0" expanded="false" />
+            <element signature="e#17989#18176#0" expanded="false" />
+            <element signature="e#18175#18176#0" expanded="false" />
+            <element signature="e#18466#18467#0" expanded="false" />
+            <element signature="e#18494#18495#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3022,17 +2939,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_group.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -3161,6 +3067,82 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/add_contacts_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_add_contacts.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5970">
+          <caret line="518" column="0" lean-forward="false" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#5749#7842#0" expanded="false" />
+            <element signature="e#7841#7842#0" expanded="false" />
+            <element signature="e#8604#8605#0" expanded="false" />
+            <element signature="e#8640#8641#0" expanded="false" />
+            <element signature="e#9115#9464#0" expanded="false" />
+            <element signature="e#9463#9464#0" expanded="false" />
+            <element signature="e#9517#9766#0" expanded="false" />
+            <element signature="e#9765#9766#0" expanded="false" />
+            <element signature="e#11138#12152#0" expanded="false" />
+            <element signature="e#12151#12152#0" expanded="false" />
+            <element signature="e#12435#12992#0" expanded="false" />
+            <element signature="e#12991#12992#0" expanded="false" />
+            <element signature="e#13040#15133#0" expanded="false" />
+            <element signature="e#15132#15133#0" expanded="false" />
+            <element signature="e#16115#16493#0" expanded="false" />
+            <element signature="e#16492#16493#0" expanded="false" />
+            <element signature="e#17292#17942#0" expanded="false" />
+            <element signature="e#17941#17942#0" expanded="false" />
+            <element signature="e#17989#18176#0" expanded="false" />
+            <element signature="e#18175#18176#0" expanded="false" />
+            <element signature="e#18466#18467#0" expanded="false" />
+            <element signature="e#18494#18495#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -3177,34 +3159,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="515" column="12" lean-forward="false" selection-start-line="515" selection-start-column="8" selection-end-line="515" selection-end-column="12" />
+        <state relative-caret-position="933">
+          <caret line="219" column="38" lean-forward="false" selection-start-line="219" selection-start-column="27" selection-end-line="219" selection-end-column="38" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5749#7842#0" expanded="true" />
-            <element signature="e#7841#7842#0" expanded="true" />
-            <element signature="e#8604#8605#0" expanded="true" />
-            <element signature="e#8640#8641#0" expanded="true" />
-            <element signature="e#9115#9464#0" expanded="true" />
-            <element signature="e#9463#9464#0" expanded="true" />
-            <element signature="e#9517#9766#0" expanded="true" />
-            <element signature="e#9765#9766#0" expanded="true" />
-            <element signature="e#11138#12152#0" expanded="true" />
-            <element signature="e#12151#12152#0" expanded="true" />
-            <element signature="e#12435#12992#0" expanded="true" />
-            <element signature="e#12991#12992#0" expanded="true" />
-            <element signature="e#13040#15133#0" expanded="true" />
-            <element signature="e#15132#15133#0" expanded="true" />
-            <element signature="e#16115#16493#0" expanded="true" />
-            <element signature="e#16492#16493#0" expanded="true" />
-            <element signature="e#17292#17942#0" expanded="true" />
-            <element signature="e#17941#17942#0" expanded="true" />
-            <element signature="e#17989#18176#0" expanded="true" />
-            <element signature="e#18175#18176#0" expanded="true" />
-            <element signature="e#18466#18467#0" expanded="true" />
-            <element signature="e#18494#18495#0" expanded="true" />
+            <element signature="e#7281#8454#0" expanded="true" />
+            <element signature="e#8453#8454#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="202" column="21" lean-forward="false" selection-start-line="202" selection-start-column="21" selection-end-line="202" selection-end-column="21" />
+          <folding>
+            <element signature="e#6888#7514#0" expanded="true" />
+            <element signature="e#7513#7514#0" expanded="true" />
+            <element signature="e#7622#7771#0" expanded="true" />
+            <element signature="e#7770#7771#0" expanded="true" />
+            <element signature="e#8558#8559#0" expanded="true" />
+            <element signature="e#8599#8600#0" expanded="true" />
+            <element signature="e#9596#9597#0" expanded="true" />
+            <element signature="e#9624#9625#0" expanded="true" />
           </folding>
         </state>
       </provider>

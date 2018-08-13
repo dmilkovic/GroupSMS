@@ -18,7 +18,6 @@ android:layout_height="wrap_content" >
 
 <CheckBox
     android:id="@+id/checkBox1"
-    android:button="@drawable/custom_checkbox_design"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"

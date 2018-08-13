@@ -128,7 +128,7 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
                 String name="";
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
 
-                if (hasPhoneNumber > 0) {
+                /*if (hasPhoneNumber > 0) {
                     Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
 
                     while (phoneCursor.moveToNext()) {
@@ -154,17 +154,53 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
                 if(!item.isEmpty()) {
                     sublist.add(item);
                     Collections.sort(sublist);
+                }*/
+                if (hasPhoneNumber > 0) {
+                    Cursor phoneCursor = contentResolver.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{contact_id}, null);
+
+                    while (phoneCursor.moveToNext()) {
+                        output = new StringBuffer();
+                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        number = phoneNumber.replaceAll("-", "").replaceAll("\\s+", "");
+                        name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
+                        //  Log.d("con", "Name1: " + name);
+                        //   Log.d("con", "Phone Number1: " + phoneNumber);
+                        flag=true;
+
+                        output.append(name);
+                        output.append("\n" + number);
+
+                        item = output.toString();
+                        if(!item.isEmpty() && !contactList.contains(item)) {
+                            contactList.add(item);
+                            sublist = contactList.subList(1, contactList.size());
+                            Collections.sort(sublist);
+                        }
+                    }
+                    phoneCursor.close();
                 }
 
             }
-            for(String element: sublist){
+           /* for(String element: sublist){
                 list.add(new Model(element));
-            }
+            }*/
 
             runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
+                    contacts = new ArrayList<String>();
+                    //sublist.removeAll(members_now);
+                    for(String element: sublist){
+                        Model m = new Model(element);
+                        list.add(m);
+                        //list.add(new Model(element));
+                    }
 
                     adapter = new MyAdapter(NewGroup.this,list);
                     mListView.setAdapter(adapter);
