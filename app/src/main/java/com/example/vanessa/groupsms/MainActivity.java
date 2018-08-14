@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private static final String TAG = "MainActivity";
 
-    MenuItem searchMenuItem;
+    MenuItem searchMenuItem, delete;
     SearchView searchView;
 
     SimpleAdapter adapter;
@@ -227,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             inflater.inflate(R.menu.delete_templates_menu, menu);
             isMultiSelect = true;
             mActionMode = actionMode;
+
+            delete = menu.findItem(R.id.action_delete);
+            delete.setVisible(false);
             return true;
         }
 
@@ -242,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             {
                 case R.id.action_delete:
                     AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                    alert.setMessage("Are you sure you want to delete group?");
+                    alert.setMessage("Are you sure you want to delete selected groups?");
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -314,6 +317,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                             else
                             {
                                 mActionMode.setTitle("");
+                            }
+
+
+                            if(multiselect_list.size() != 0 )
+                            {
+                                delete.setVisible(true);
+                            }else {
+                                delete.setVisible(false);
                             }
 
                         }

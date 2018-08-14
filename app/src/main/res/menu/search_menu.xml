@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_search_white_24dp"
         app:showAsAction="ifRoom"
         app:actionViewClass="android.widget.SearchView" />
+    <item
+        android:id="@+id/order"
+        android:title="Order by"
+        app:showAsAction="never"
+        />
 </menu>

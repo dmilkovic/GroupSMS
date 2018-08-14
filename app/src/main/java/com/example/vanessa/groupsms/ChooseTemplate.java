@@ -64,7 +64,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
    // ArrayList<HashMap<String, String>> newList = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
-    MenuItem searchMenuItem;
+    MenuItem searchMenuItem, delete;
     SearchView searchView;
 
     Menu context_menu;
@@ -228,6 +228,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             inflater.inflate(R.menu.delete_templates_menu, menu);
             isMultiSelect = true;
             mActionMode = actionMode;
+            delete = menu.findItem(R.id.action_delete);
+            delete.setVisible(false);
             return true;
         }
 
@@ -395,6 +397,13 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                             else
                             {
                                 mActionMode.setTitle("");
+                            }
+
+                            if(multiselect_list.size() != 0 )
+                            {
+                                delete.setVisible(true);
+                            }else {
+                                delete.setVisible(false);
                             }
 
                         }
@@ -676,56 +685,11 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
         dialogBuilder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-               /* AlertDialog.Builder alert = new AlertDialog.Builder(this);
-//                alert.setTitle("Alert!");
-                alert.setTitle("Are you sure you want to delete this template?");
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {*/
-                        //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
-
-                       /* Query applesQuery = dref.orderByChild("title").equalTo(title);
-                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.e(TAG, "onCancelled", databaseError.toException());
-                            }
-                        });
-                        list.remove(template); //brisanje samo iz arraya, ne iz firebasea
-
-                        /*Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
-                        templates.putExtra("group_name", group_name);
-                        startActivity(templates);*/
-
-                        HashMap<String, String> object = new HashMap<>();
-                        object.put("name", template.getTitle());
-                        object.put("message", template.getContent());
-                        deleteItem(object);
-
-                    }
-              /*  });
-                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                });
-
-                alert.show();
-            }*/
-
-
+                HashMap<String, String> object = new HashMap<>();
+                object.put("name", template.getTitle());
+                object.put("message", template.getContent());
+                deleteItem(object);
+            }
         });
 
         AlertDialog b = dialogBuilder.create();

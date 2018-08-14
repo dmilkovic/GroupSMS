@@ -4,13 +4,16 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,8 +26,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +45,7 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String groupId;
+    private String[] orderBy;
 
     private ListView mListView;
     private ProgressDialog pDialog;
@@ -48,8 +56,9 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
 
     Cursor cursor;
     int counter;
+    private int checkedOrder = 0;
 
-    MenuItem searchMenuItem;
+    MenuItem searchMenuItem, orderItem;
     SearchView searchView;
 
     ArrayAdapter<Model> adapter;
@@ -69,10 +78,19 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
         group_name = extras.getString("group_name");
         setTitle("Add members");
 
+        try{
+            checkedOrder = extras.getInt("order");
+        }catch (Exception e)
+        {
+
+        }
+
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Reading contacts...");
         pDialog.setCancelable(false);
         pDialog.show();
+
+        orderBy = getResources().getStringArray(R.array.contacts_order);
 
 
         mListView = (ListView) findViewById(R.id.list);
@@ -83,7 +101,7 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
 
             @Override
             public void run() {
-                getContacts();
+                getContacts(checkedOrder);
             }
         }).start();
 
@@ -94,7 +112,7 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
         flag=false;
 
     }
-    public void getContacts() {
+    public void getContacts(int order) {
         contactList = new ArrayList<String>();
         sublist = new ArrayList<String>();
 
@@ -127,7 +145,7 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
                 String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
                 String name="";
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
-                
+
                 if (hasPhoneNumber > 0) {
                     Cursor phoneCursor = contentResolver.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -140,7 +158,14 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
                         phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                         number = phoneNumber.replaceAll("-", "").replaceAll("\\s+", "");
-                        name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
+
+                        if(order == 0)
+                        {
+                            name = cursor.getString(cursor.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME ));
+                        }else
+                        {
+                            name = cursor.getString(cursor.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME_ALTERNATIVE ));
+                        }
                         //  Log.d("con", "Name1: " + name);
                         //   Log.d("con", "Phone Number1: " + phoneNumber);
                         flag=true;
@@ -206,12 +231,49 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
         searchMenuItem = menu.findItem(R.id.search);
         searchView = (SearchView) searchMenuItem.getActionView();
 
+        orderItem = menu.findItem(R.id.order);
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
 
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.order:
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(NewGroup.this);
+                mBuilder.setTitle("Order contacts by: ");
+                mBuilder.setSingleChoiceItems(orderBy,  checkedOrder, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // mResult.setText(listItems[i]);
+                        checkedOrder = i;
+                        writeNewGroup(group_name);
+                        finish();
+                        Intent contacts = new Intent(NewGroup.this, AddContacts.class);
+                        contacts.putExtra("order", checkedOrder);
+                        contacts.putExtra("group_name", group_name);
+                        startActivity(contacts);
+                    }
+                });
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+                return true;
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     public void createGroup(View view) {
         writeNewGroup(group_name);

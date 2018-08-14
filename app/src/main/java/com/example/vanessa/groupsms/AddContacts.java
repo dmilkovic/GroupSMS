@@ -46,7 +46,9 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
     DatabaseReference dref;
 
     private String groupId;
+    private String[] orderBy;
 
+    private int checkedOrder = 0;
     private ListView mListView;
     private ProgressDialog pDialog;
     private Handler updateBarHandler;
@@ -57,7 +59,7 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
     Cursor cursor;
     int counter;
 
-    MenuItem searchMenuItem, delete;
+    MenuItem searchMenuItem, delete, orderItem;
     SearchView searchView;
     ArrayAdapter<Model> adapter;
     List<Model> list = new ArrayList<Model>();
@@ -68,17 +70,28 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
 
     int members_cnt;
     String uid;
+    Thread myThread;
 
     boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contacts);
         Bundle extras = getIntent().getExtras();
         group_name = extras.getString("group_name");
+
+        try{
+            checkedOrder = extras.getInt("order");
+        }catch (Exception e)
+        {
+
+        }
         setTitle("Add members");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        orderBy = getResources().getStringArray(R.array.contacts_order);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Reading contacts...");
@@ -131,18 +144,23 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
         });
 
         flag=false;
+        startThread();
+    }
 
+    private void startThread()
+    {
         // Since reading contacts takes more time, let's run it on a separate thread.
-        new Thread(new Runnable() {
+        myThread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                getContacts();
+                getContacts(checkedOrder);
             }
-        }).start();
+        });
+        myThread.start();
     }
 
-    public void getContacts() {
+    public void getContacts(int order) {
         contactList = new ArrayList<String>();
         sublist = new ArrayList<String>();
 
@@ -188,8 +206,16 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                         phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                         number = phoneNumber.replaceAll("-", "").replaceAll("\\s+", "");
-                        name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                      //  Log.d("con", "Name1: " + name);
+
+                        if(order == 0)
+                        {
+                            name = cursor.getString(cursor.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME ));
+                        }else
+                        {
+                            name = cursor.getString(cursor.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME_ALTERNATIVE ));
+                        }
+
+                        //  Log.d("con", "Name1: " + name);
                      //   Log.d("con", "Phone Number1: " + phoneNumber);
                         flag=true;
 
@@ -249,11 +275,11 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
         }
     }
 
-    @Override
+    /*@Override
     public boolean onSupportNavigateUp(){
         finish();
         return true;
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -264,6 +290,7 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                 getSystemService(Context.SEARCH_SERVICE);
         searchMenuItem = menu.findItem(R.id.search);
         delete_group = menu.findItem(R.id.delete_group);
+        orderItem = menu.findItem(R.id.order);
 
         searchView = (SearchView) searchMenuItem.getActionView();
 
@@ -318,7 +345,30 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                     }
                 });
                 alert.show();
+                return true;
 
+            case R.id.order:
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddContacts.this);
+                mBuilder.setTitle("Order contacts by: ");
+                mBuilder.setSingleChoiceItems(orderBy,  checkedOrder, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       // mResult.setText(listItems[i]);
+                        checkedOrder = i;
+                        writeNewGroup(group_name);
+                        finish();
+                        Intent contacts = new Intent(AddContacts.this, AddContacts.class);
+                        contacts.putExtra("order", checkedOrder);
+                        contacts.putExtra("group_name", group_name);
+                        startActivity(contacts);
+                    }
+                });
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+                return true;
+
+            case android.R.id.home:
+                this.finish();
                 return true;
 
             default:
