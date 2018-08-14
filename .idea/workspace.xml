@@ -47,19 +47,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ChooseTemplate.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ChooseTemplate.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="406" column="29" lean-forward="false" selection-start-line="400" selection-start-column="0" selection-end-line="406" selection-end-column="29" />
+            <state relative-caret-position="216">
+              <caret line="697" column="43" lean-forward="false" selection-start-line="697" selection-start-column="43" selection-end-line="697" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#22290#23462#0" expanded="true" />
                 <element signature="e#23461#23462#0" expanded="true" />
-                <element signature="e#27415#27774#0" expanded="true" />
-                <element signature="e#27773#27774#0" expanded="true" />
-                <element signature="e#30290#30291#0" expanded="true" />
-                <element signature="e#30318#30319#0" expanded="true" />
+                <element signature="e#27415#28658#0" expanded="true" />
+                <element signature="e#27841#28323#0" expanded="true" />
+                <element signature="e#28322#28323#0" expanded="true" />
+                <element signature="e#28372#28602#0" expanded="true" />
+                <element signature="e#28601#28602#0" expanded="true" />
+                <element signature="e#28657#28658#0" expanded="true" />
+                <element signature="e#31174#31175#0" expanded="true" />
+                <element signature="e#31202#31203#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,8 +72,8 @@
       <file leaf-file-name="Templates.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
-              <caret line="310" column="29" lean-forward="false" selection-start-line="305" selection-start-column="26" selection-end-line="310" selection-end-column="29" />
+            <state relative-caret-position="336">
+              <caret line="470" column="29" lean-forward="true" selection-start-line="448" selection-start-column="16" selection-end-line="470" selection-end-column="29" />
               <folding>
                 <element signature="e#9389#9738#0" expanded="true" />
                 <element signature="e#9737#9738#0" expanded="true" />
@@ -120,7 +124,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
@@ -2295,8 +2299,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" />
       </list>
     </option>
   </component>
@@ -2673,10 +2677,14 @@
             <element signature="imports" expanded="true" />
             <element signature="e#22290#23462#0" expanded="true" />
             <element signature="e#23461#23462#0" expanded="true" />
-            <element signature="e#27415#27774#0" expanded="true" />
-            <element signature="e#27773#27774#0" expanded="true" />
-            <element signature="e#30290#30291#0" expanded="true" />
-            <element signature="e#30318#30319#0" expanded="true" />
+            <element signature="e#27415#28658#0" expanded="true" />
+            <element signature="e#27841#28323#0" expanded="true" />
+            <element signature="e#28322#28323#0" expanded="true" />
+            <element signature="e#28372#28602#0" expanded="true" />
+            <element signature="e#28601#28602#0" expanded="true" />
+            <element signature="e#28657#28658#0" expanded="true" />
+            <element signature="e#31174#31175#0" expanded="true" />
+            <element signature="e#31202#31203#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2783,10 +2791,14 @@
             <element signature="imports" expanded="true" />
             <element signature="e#22290#23462#0" expanded="true" />
             <element signature="e#23461#23462#0" expanded="true" />
-            <element signature="e#27415#27774#0" expanded="true" />
-            <element signature="e#27773#27774#0" expanded="true" />
-            <element signature="e#30290#30291#0" expanded="true" />
-            <element signature="e#30318#30319#0" expanded="true" />
+            <element signature="e#27415#28658#0" expanded="true" />
+            <element signature="e#27841#28323#0" expanded="true" />
+            <element signature="e#28322#28323#0" expanded="true" />
+            <element signature="e#28372#28602#0" expanded="true" />
+            <element signature="e#28601#28602#0" expanded="true" />
+            <element signature="e#28657#28658#0" expanded="true" />
+            <element signature="e#31174#31175#0" expanded="true" />
+            <element signature="e#31202#31203#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2831,10 +2843,14 @@
             <element signature="imports" expanded="true" />
             <element signature="e#22290#23462#0" expanded="true" />
             <element signature="e#23461#23462#0" expanded="true" />
-            <element signature="e#27415#27774#0" expanded="true" />
-            <element signature="e#27773#27774#0" expanded="true" />
-            <element signature="e#30290#30291#0" expanded="true" />
-            <element signature="e#30318#30319#0" expanded="true" />
+            <element signature="e#27415#28658#0" expanded="true" />
+            <element signature="e#27841#28323#0" expanded="true" />
+            <element signature="e#28322#28323#0" expanded="true" />
+            <element signature="e#28372#28602#0" expanded="true" />
+            <element signature="e#28601#28602#0" expanded="true" />
+            <element signature="e#28657#28658#0" expanded="true" />
+            <element signature="e#31174#31175#0" expanded="true" />
+            <element signature="e#31202#31203#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3140,10 +3156,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="310" column="29" lean-forward="false" selection-start-line="305" selection-start-column="26" selection-end-line="310" selection-end-column="29" />
+        <state relative-caret-position="336">
+          <caret line="470" column="29" lean-forward="true" selection-start-line="448" selection-start-column="16" selection-end-line="470" selection-end-column="29" />
           <folding>
             <element signature="e#9389#9738#0" expanded="true" />
             <element signature="e#9737#9738#0" expanded="true" />
@@ -3159,25 +3183,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="406" column="29" lean-forward="false" selection-start-line="400" selection-start-column="0" selection-end-line="406" selection-end-column="29" />
+        <state relative-caret-position="216">
+          <caret line="697" column="43" lean-forward="false" selection-start-line="697" selection-start-column="43" selection-end-line="697" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#22290#23462#0" expanded="true" />
             <element signature="e#23461#23462#0" expanded="true" />
-            <element signature="e#27415#27774#0" expanded="true" />
-            <element signature="e#27773#27774#0" expanded="true" />
-            <element signature="e#30290#30291#0" expanded="true" />
-            <element signature="e#30318#30319#0" expanded="true" />
+            <element signature="e#27415#28658#0" expanded="true" />
+            <element signature="e#27841#28323#0" expanded="true" />
+            <element signature="e#28322#28323#0" expanded="true" />
+            <element signature="e#28372#28602#0" expanded="true" />
+            <element signature="e#28601#28602#0" expanded="true" />
+            <element signature="e#28657#28658#0" expanded="true" />
+            <element signature="e#31174#31175#0" expanded="true" />
+            <element signature="e#31202#31203#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>

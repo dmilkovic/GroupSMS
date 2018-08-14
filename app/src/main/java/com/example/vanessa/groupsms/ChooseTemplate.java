@@ -685,10 +685,29 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
         dialogBuilder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HashMap<String, String> object = new HashMap<>();
-                object.put("name", template.getTitle());
-                object.put("message", template.getContent());
-                deleteItem(object);
+                android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(ChooseTemplate.this);
+//                alert.setTitle("Alert!");
+                alert.setMessage("Are you sure you want to delete this template?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        HashMap<String, String> object = new HashMap<>();
+                        object.put("name", template.getTitle());
+                        object.put("message", template.getContent());
+                        deleteItem(object);
+                        dialog.dismiss();
+                    }
+                });
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
             }
         });
 
