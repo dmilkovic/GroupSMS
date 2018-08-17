@@ -135,7 +135,7 @@ public class GroupActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long arg3) {
                 final String name= list.get(position);
                 final int index = position;
-                Toast.makeText(getApplicationContext(), "ime: " + name + ", poziciija: " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "ime: " + name + ", poziciija: " + position, Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(GroupActivity.this);
                 alert.setMessage("Are you sure you want to delete this contact?");
