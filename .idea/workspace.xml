@@ -6,13 +6,18 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Main" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5137cdff-3b8a-4972-bb59-0e1e475c272f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,108 +43,93 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ChooseTemplate.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
+      <file leaf-file-name="Templates.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="691" column="16" lean-forward="false" selection-start-line="691" selection-start-column="16" selection-end-line="691" selection-end-column="16" />
+            <state relative-caret-position="195">
+              <caret line="54" column="52" lean-forward="false" selection-start-line="54" selection-start-column="52" selection-end-line="54" selection-end-column="52" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#17023#18568#0" expanded="true" />
-                <element signature="e#18567#18568#0" expanded="true" />
-                <element signature="e#18609#21306#0" expanded="true" />
-                <element signature="e#21305#21306#0" expanded="true" />
-                <element signature="e#22182#22612#0" expanded="true" />
-                <element signature="e#22611#22612#0" expanded="true" />
-                <element signature="e#22666#22856#0" expanded="true" />
-                <element signature="e#22855#22856#0" expanded="true" />
-                <element signature="e#22999#24130#0" expanded="true" />
-                <element signature="e#24129#24130#0" expanded="true" />
-                <element signature="e#25633#27866#0" expanded="true" />
-                <element signature="e#27865#27866#0" expanded="true" />
-                <element signature="e#27924#28135#0" expanded="true" />
-                <element signature="e#28134#28135#0" expanded="true" />
-                <element signature="e#28193#29436#0" expanded="true" />
-                <element signature="e#28619#29101#0" expanded="true" />
-                <element signature="e#29100#29101#0" expanded="true" />
-                <element signature="e#29150#29380#0" expanded="true" />
-                <element signature="e#29379#29380#0" expanded="true" />
-                <element signature="e#29435#29436#0" expanded="true" />
-                <element signature="e#31952#31953#0" expanded="true" />
-                <element signature="e#31980#31981#0" expanded="true" />
-                <element signature="e#33354#35064#0" expanded="true" />
-                <element signature="e#35063#35064#0" expanded="true" />
-                <element signature="e#35118#35279#0" expanded="true" />
-                <element signature="e#35278#35279#0" expanded="true" />
+                <element signature="e#9192#9193#0" expanded="true" />
+                <element signature="e#9228#9229#0" expanded="true" />
+                <element signature="e#9737#10086#0" expanded="true" />
+                <element signature="e#10085#10086#0" expanded="true" />
+                <element signature="e#10139#10388#0" expanded="true" />
+                <element signature="e#10387#10388#0" expanded="true" />
+                <element signature="e#11487#12771#0" expanded="true" />
+                <element signature="e#12770#12771#0" expanded="true" />
+                <element signature="e#13156#14761#0" expanded="true" />
+                <element signature="e#14760#14761#0" expanded="true" />
+                <element signature="e#14803#15025#0" expanded="true" />
+                <element signature="e#15024#15025#0" expanded="true" />
+                <element signature="e#16432#18477#0" expanded="true" />
+                <element signature="e#18476#18477#0" expanded="true" />
+                <element signature="e#18531#18692#0" expanded="true" />
+                <element signature="e#18691#18692#0" expanded="true" />
+                <element signature="e#18745#19889#0" expanded="true" />
+                <element signature="e#19120#19554#0" expanded="true" />
+                <element signature="e#19553#19554#0" expanded="true" />
+                <element signature="e#19603#19833#0" expanded="true" />
+                <element signature="e#19832#19833#0" expanded="true" />
+                <element signature="e#19888#19889#0" expanded="true" />
+                <element signature="e#22246#24696#0" expanded="true" />
+                <element signature="e#24695#24696#0" expanded="true" />
+                <element signature="e#24750#24911#0" expanded="true" />
+                <element signature="e#24910#24911#0" expanded="true" />
+                <element signature="e#25101#25102#0" expanded="true" />
+                <element signature="e#25129#25130#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Templates.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
+      <file leaf-file-name="ChooseTemplate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6375">
-              <caret line="470" column="29" lean-forward="false" selection-start-line="448" selection-start-column="16" selection-end-line="470" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="180">
+              <caret line="780" column="2" lean-forward="false" selection-start-line="780" selection-start-column="2" selection-end-line="781" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#32533#32534#0" expanded="true" />
+                <element signature="e#32561#32562#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="delete_templates_menu.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/delete_templates_menu.xml">
+      <file leaf-file-name="group_menu.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="30" lean-forward="false" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="38" />
+            <state relative-caret-position="105">
+              <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="61" lean-forward="false" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="content_group_item.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml">
+      <file leaf-file-name="main_menu.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_menu.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="49" lean-forward="false" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add_contacts_menu.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/add_contacts_menu.xml">
+      <file leaf-file-name="search_menu.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/search_menu.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="17" selection-end-column="10" />
+            <state relative-caret-position="150">
+              <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -148,25 +138,78 @@
       <file leaf-file-name="GroupActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="175" column="41" lean-forward="false" selection-start-line="175" selection-start-column="41" selection-end-line="175" selection-end-column="41" />
+            <state relative-caret-position="-3672">
+              <caret line="67" column="55" lean-forward="false" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="55" />
+              <folding>
+                <element signature="e#9479#11260#0" expanded="true" />
+                <element signature="e#11259#11260#0" expanded="true" />
+                <element signature="e#11315#11542#0" expanded="true" />
+                <element signature="e#11541#11542#0" expanded="true" />
+                <element signature="e#11940#13278#0" expanded="true" />
+                <element signature="e#13277#13278#0" expanded="true" />
+                <element signature="e#13327#13557#0" expanded="true" />
+                <element signature="e#13556#13557#0" expanded="true" />
+                <element signature="e#13977#13978#0" expanded="true" />
+                <element signature="e#14015#14016#0" expanded="true" />
+                <element signature="e#14984#15156#0" expanded="true" />
+                <element signature="e#15155#15156#0" expanded="true" />
+                <element signature="e#15210#15371#0" expanded="true" />
+                <element signature="e#15370#15371#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="153" column="13" lean-forward="false" selection-start-line="153" selection-start-column="13" selection-end-line="153" selection-end-column="13" />
+              <folding>
+                <element signature="e#4639#4640#0" expanded="true" />
+                <element signature="e#4679#4680#0" expanded="true" />
+                <element signature="e#5263#5735#0" expanded="true" />
+                <element signature="e#5734#5735#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Template.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Template.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddContacts.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AddContacts.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1860">
-              <caret line="162" column="34" lean-forward="false" selection-start-line="162" selection-start-column="28" selection-end-line="162" selection-end-column="37" />
+            <state relative-caret-position="366">
+              <caret line="447" column="11" lean-forward="false" selection-start-line="447" selection-start-column="11" selection-end-line="447" selection-end-column="11" />
               <folding>
-                <element signature="e#13744#13745#0" expanded="true" />
-                <element signature="e#13785#13786#0" expanded="true" />
-                <element signature="e#16215#16216#0" expanded="true" />
-                <element signature="e#16243#16244#0" expanded="true" />
+                <element signature="e#13750#13751#0" expanded="true" />
+                <element signature="e#13797#13798#0" expanded="true" />
+                <element signature="e#16408#16409#0" expanded="true" />
+                <element signature="e#16436#16437#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="34" column="47" lean-forward="false" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+            <state />
           </provider>
         </entry>
       </file>
@@ -181,36 +224,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onSupportNavigateUp</find>
-      <find>them</find>
-      <find>onA</find>
-      <find>list</find>
-      <find>removeItems</find>
-      <find>DISPLAY_NAME</find>
-      <find>getContacts</find>
-      <find>display</find>
-      <find>cursor</find>
-      <find>getCon</find>
-      <find>are</find>
-      <find>addCon</find>
-      <find>try</find>
-      <find>R.id.home</find>
-      <find>add</find>
-      <find>addMe</find>
-      <find>options</find>
-      <find>orderBy</find>
-      <find>intent</find>
-      <find>getConta</find>
-      <find>Edit</find>
-      <find>Delete</find>
+      <find>singleva</find>
+      <find>final</find>
+      <find>adapter</find>
+      <find>ada</find>
+      <find>showTemplate</find>
+      <find>onChildAdded</find>
+      <find>refreshAdapter</find>
+      <find>listview</find>
+      <find>lv</find>
+      <find>show</find>
+      <find>push</find>
+      <find>uid</find>
+      <find>loading</find>
+      <find>getData</find>
+      <find>actionMode</find>
+      <find>isMultiSelect</find>
+      <find>checkBox.setVisibility(View.GONE);</find>
       <find>multiselect_list</find>
-      <find>delete</find>
-      <find>order</find>
-      <find>toast</find>
-      <find>op</find>
+      <find>check</find>
+      <find>onChild</find>
+      <find>add</find>
+      <find>onData</find>
+      <find>Oncrea</find>
+      <find>optio</find>
+      <find>AddContacts</find>
       <find>Intent</find>
-      <find>dismiss</find>
-      <find>refres</find>
+      <find>group</find>
+      <find>newGr</find>
+      <find>activity</find>
+      <find>group.getMembers();</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2252,21 +2295,21 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/add_contacts_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/search_menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/NewGroup.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/search_menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java" />
       </list>
     </option>
   </component>
@@ -2298,6 +2341,39 @@
             <path>
               <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
+            </path>
+            <path>
+              <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="groupsms" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="GroupSMS" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="menu" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
           </expand>
           <select />
@@ -2507,35 +2583,67 @@
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32930845" sideWeight="0.50213444" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24368826" sideWeight="0.5064034" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49786553" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32930845" sideWeight="0.49786553" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14994664" sideWeight="0.4942717" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24368826" sideWeight="0.49786553" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49573106" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14087513" sideWeight="0.4942717" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2107574" sideWeight="0.49573106" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14994664" sideWeight="0.5057283" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14994664" sideWeight="0.5057283" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24368826" sideWeight="0.5064034" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32930845" sideWeight="0.49573106" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2107574" sideWeight="0.49573106" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49786553" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14087513" sideWeight="0.4942717" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14994664" sideWeight="0.5057283" order="6" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -2545,91 +2653,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_new_group.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contacts_list_item.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="42" lean-forward="false" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_group_item.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="72" lean-forward="false" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#17023#18568#0" expanded="true" />
-            <element signature="e#18567#18568#0" expanded="true" />
-            <element signature="e#18609#21306#0" expanded="true" />
-            <element signature="e#21305#21306#0" expanded="true" />
-            <element signature="e#22182#22612#0" expanded="true" />
-            <element signature="e#22611#22612#0" expanded="true" />
-            <element signature="e#22666#22856#0" expanded="true" />
-            <element signature="e#22855#22856#0" expanded="true" />
-            <element signature="e#22999#24130#0" expanded="true" />
-            <element signature="e#24129#24130#0" expanded="true" />
-            <element signature="e#25633#27866#0" expanded="true" />
-            <element signature="e#27865#27866#0" expanded="true" />
-            <element signature="e#27924#28135#0" expanded="true" />
-            <element signature="e#28134#28135#0" expanded="true" />
-            <element signature="e#28193#29436#0" expanded="true" />
-            <element signature="e#28619#29101#0" expanded="true" />
-            <element signature="e#29100#29101#0" expanded="true" />
-            <element signature="e#29150#29380#0" expanded="true" />
-            <element signature="e#29379#29380#0" expanded="true" />
-            <element signature="e#29435#29436#0" expanded="true" />
-            <element signature="e#31952#31953#0" expanded="true" />
-            <element signature="e#31980#31981#0" expanded="true" />
-            <element signature="e#33354#35064#0" expanded="true" />
-            <element signature="e#35063#35064#0" expanded="true" />
-            <element signature="e#35118#35279#0" expanded="true" />
-            <element signature="e#35278#35279#0" expanded="true" />
+            <element signature="e#32533#32534#0" expanded="true" />
+            <element signature="e#32561#32562#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2638,7 +2669,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3465">
           <caret line="283" column="10" lean-forward="true" selection-start-line="283" selection-start-column="10" selection-end-line="283" selection-end-column="10" />
-          <folding />
+          <folding>
+            <element signature="e#4639#4640#0" expanded="true" />
+            <element signature="e#4679#4680#0" expanded="true" />
+            <element signature="e#5263#5735#0" expanded="true" />
+            <element signature="e#5734#5735#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2657,10 +2693,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="46" column="53" lean-forward="false" selection-start-line="46" selection-start-column="53" selection-end-line="46" selection-end-column="53" />
-          <folding>
-            <element signature="e#865#883#0" expanded="false" />
-            <element signature="e#1719#1753#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2702,7 +2735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2732,32 +2764,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#17023#18568#0" expanded="true" />
-            <element signature="e#18567#18568#0" expanded="true" />
-            <element signature="e#18609#21306#0" expanded="true" />
-            <element signature="e#21305#21306#0" expanded="true" />
-            <element signature="e#22182#22612#0" expanded="true" />
-            <element signature="e#22611#22612#0" expanded="true" />
-            <element signature="e#22666#22856#0" expanded="true" />
-            <element signature="e#22855#22856#0" expanded="true" />
-            <element signature="e#22999#24130#0" expanded="true" />
-            <element signature="e#24129#24130#0" expanded="true" />
-            <element signature="e#25633#27866#0" expanded="true" />
-            <element signature="e#27865#27866#0" expanded="true" />
-            <element signature="e#27924#28135#0" expanded="true" />
-            <element signature="e#28134#28135#0" expanded="true" />
-            <element signature="e#28193#29436#0" expanded="true" />
-            <element signature="e#28619#29101#0" expanded="true" />
-            <element signature="e#29100#29101#0" expanded="true" />
-            <element signature="e#29150#29380#0" expanded="true" />
-            <element signature="e#29379#29380#0" expanded="true" />
-            <element signature="e#29435#29436#0" expanded="true" />
-            <element signature="e#31952#31953#0" expanded="true" />
-            <element signature="e#31980#31981#0" expanded="true" />
-            <element signature="e#33354#35064#0" expanded="true" />
-            <element signature="e#35063#35064#0" expanded="true" />
-            <element signature="e#35118#35279#0" expanded="true" />
-            <element signature="e#35278#35279#0" expanded="true" />
+            <element signature="e#32533#32534#0" expanded="true" />
+            <element signature="e#32561#32562#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2799,32 +2807,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#17023#18568#0" expanded="true" />
-            <element signature="e#18567#18568#0" expanded="true" />
-            <element signature="e#18609#21306#0" expanded="true" />
-            <element signature="e#21305#21306#0" expanded="true" />
-            <element signature="e#22182#22612#0" expanded="true" />
-            <element signature="e#22611#22612#0" expanded="true" />
-            <element signature="e#22666#22856#0" expanded="true" />
-            <element signature="e#22855#22856#0" expanded="true" />
-            <element signature="e#22999#24130#0" expanded="true" />
-            <element signature="e#24129#24130#0" expanded="true" />
-            <element signature="e#25633#27866#0" expanded="true" />
-            <element signature="e#27865#27866#0" expanded="true" />
-            <element signature="e#27924#28135#0" expanded="true" />
-            <element signature="e#28134#28135#0" expanded="true" />
-            <element signature="e#28193#29436#0" expanded="true" />
-            <element signature="e#28619#29101#0" expanded="true" />
-            <element signature="e#29100#29101#0" expanded="true" />
-            <element signature="e#29150#29380#0" expanded="true" />
-            <element signature="e#29379#29380#0" expanded="true" />
-            <element signature="e#29435#29436#0" expanded="true" />
-            <element signature="e#31952#31953#0" expanded="true" />
-            <element signature="e#31980#31981#0" expanded="true" />
-            <element signature="e#33354#35064#0" expanded="true" />
-            <element signature="e#35063#35064#0" expanded="true" />
-            <element signature="e#35118#35279#0" expanded="true" />
-            <element signature="e#35278#35279#0" expanded="true" />
+            <element signature="e#32533#32534#0" expanded="true" />
+            <element signature="e#32561#32562#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2915,7 +2899,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2940,20 +2923,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="39" />
-          <folding>
-            <element signature="e#865#883#0" expanded="false" />
-            <element signature="e#1719#1753#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/contetnt_template.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -2961,16 +2930,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
           <caret line="39" column="31" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -2988,7 +2947,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3009,17 +2967,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="56" lean-forward="false" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/search_menu.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -3077,6 +3024,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk">
+      <provider selected="true" editor-type-id="apk-viewer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Android/Sdk/platforms/android-25/android.jar!/java/lang/String.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="268" column="18" lean-forward="false" selection-start-line="268" selection-start-column="18" selection-end-line="268" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/delete_templates_menu.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3088,80 +3047,221 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java">
+    <entry file="jar://$USER_HOME$/Android/Sdk/platforms/android-25/android.jar!/android/widget/CompoundButton.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1860">
-          <caret line="162" column="34" lean-forward="false" selection-start-line="162" selection-start-column="28" selection-end-line="162" selection-end-column="37" />
+        <state relative-caret-position="492">
+          <caret line="134" column="0" lean-forward="false" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
           <folding>
-            <element signature="e#13744#13745#0" expanded="true" />
-            <element signature="e#13785#13786#0" expanded="true" />
-            <element signature="e#16215#16216#0" expanded="true" />
-            <element signature="e#16243#16244#0" expanded="true" />
+            <marker date="1530008548076" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1530008548076" expanded="false" signature="138:433" ph="..." />
+            <marker date="1530008548076" expanded="true" signature="553:661" ph="{...}" />
+            <marker date="1530008548076" expanded="true" signature="726:834" ph="{...}" />
+            <marker date="1530008548076" expanded="true" signature="917:1025" ph="{...}" />
+            <marker date="1530008548076" expanded="true" signature="1125:1233" ph="{...}" />
+            <marker date="1530008548076" expanded="false" signature="1259:1270" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="1306:1312" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="1347:1358" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="1394:1400" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="1454:1465" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="1501:1507" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="1552:1563" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="1599:1605" ph=" }" />
+            <marker date="1530008548076" expanded="true" signature="1699:1751" ph="{...}" />
+            <marker date="1530008548076" expanded="false" signature="1797:1808" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="1844:1850" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="1904:1915" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="1951:1957" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="1998:2009" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2045:2051" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2107:2118" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2154:2160" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2207:2218" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2254:2260" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2310:2321" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2357:2363" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2400:2411" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2447:2453" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2506:2517" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2553:2559" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2600:2611" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2647:2653" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2695:2706" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2742:2748" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2790:2801" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2837:2843" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2902:2913" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="2949:2955" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="2998:3009" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="3045:3051" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="3109:3120" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="3156:3162" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="3214:3225" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="3261:3267" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="3314:3325" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="3361:3367" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="3412:3423" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="3459:3465" ph=" }" />
+            <marker date="1530008548076" expanded="false" signature="3523:3534" ph=" { " />
+            <marker date="1530008548076" expanded="false" signature="3570:3576" ph=" }" />
+            <marker date="1530008548076" expanded="true" signature="3623:3696" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Android/Sdk/platforms/android-25/android.jar!/android/view/View.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="628" column="16" lean-forward="false" selection-start-line="628" selection-start-column="16" selection-end-line="628" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Template.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="255">
+          <caret line="153" column="13" lean-forward="false" selection-start-line="153" selection-start-column="13" selection-end-line="153" selection-end-column="13" />
+          <folding>
+            <element signature="e#4639#4640#0" expanded="true" />
+            <element signature="e#4679#4680#0" expanded="true" />
+            <element signature="e#5263#5735#0" expanded="true" />
+            <element signature="e#5734#5735#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6375">
-          <caret line="470" column="29" lean-forward="false" selection-start-line="448" selection-start-column="16" selection-end-line="470" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk">
-      <provider selected="true" editor-type-id="apk-viewer">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/group_menu.xml">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="175" column="41" lean-forward="false" selection-start-line="175" selection-start-column="41" selection-end-line="175" selection-end-column="41" />
+        <state relative-caret-position="105">
+          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_menu.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/search_menu.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/ChooseTemplate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="691" column="16" lean-forward="false" selection-start-line="691" selection-start-column="16" selection-end-line="691" selection-end-column="16" />
+        <state relative-caret-position="180">
+          <caret line="780" column="2" lean-forward="false" selection-start-line="780" selection-start-column="2" selection-end-line="781" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#17023#18568#0" expanded="true" />
-            <element signature="e#18567#18568#0" expanded="true" />
-            <element signature="e#18609#21306#0" expanded="true" />
-            <element signature="e#21305#21306#0" expanded="true" />
-            <element signature="e#22182#22612#0" expanded="true" />
-            <element signature="e#22611#22612#0" expanded="true" />
-            <element signature="e#22666#22856#0" expanded="true" />
-            <element signature="e#22855#22856#0" expanded="true" />
-            <element signature="e#22999#24130#0" expanded="true" />
-            <element signature="e#24129#24130#0" expanded="true" />
-            <element signature="e#25633#27866#0" expanded="true" />
-            <element signature="e#27865#27866#0" expanded="true" />
-            <element signature="e#27924#28135#0" expanded="true" />
-            <element signature="e#28134#28135#0" expanded="true" />
-            <element signature="e#28193#29436#0" expanded="true" />
-            <element signature="e#28619#29101#0" expanded="true" />
-            <element signature="e#29100#29101#0" expanded="true" />
-            <element signature="e#29150#29380#0" expanded="true" />
-            <element signature="e#29379#29380#0" expanded="true" />
-            <element signature="e#29435#29436#0" expanded="true" />
-            <element signature="e#31952#31953#0" expanded="true" />
-            <element signature="e#31980#31981#0" expanded="true" />
-            <element signature="e#33354#35064#0" expanded="true" />
-            <element signature="e#35063#35064#0" expanded="true" />
-            <element signature="e#35118#35279#0" expanded="true" />
-            <element signature="e#35278#35279#0" expanded="true" />
+            <element signature="e#32533#32534#0" expanded="true" />
+            <element signature="e#32561#32562#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/Templates.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="54" column="52" lean-forward="false" selection-start-line="54" selection-start-column="52" selection-end-line="54" selection-end-column="52" />
+          <folding>
+            <element signature="e#9192#9193#0" expanded="true" />
+            <element signature="e#9228#9229#0" expanded="true" />
+            <element signature="e#9737#10086#0" expanded="true" />
+            <element signature="e#10085#10086#0" expanded="true" />
+            <element signature="e#10139#10388#0" expanded="true" />
+            <element signature="e#10387#10388#0" expanded="true" />
+            <element signature="e#11487#12771#0" expanded="true" />
+            <element signature="e#12770#12771#0" expanded="true" />
+            <element signature="e#13156#14761#0" expanded="true" />
+            <element signature="e#14760#14761#0" expanded="true" />
+            <element signature="e#14803#15025#0" expanded="true" />
+            <element signature="e#15024#15025#0" expanded="true" />
+            <element signature="e#16432#18477#0" expanded="true" />
+            <element signature="e#18476#18477#0" expanded="true" />
+            <element signature="e#18531#18692#0" expanded="true" />
+            <element signature="e#18691#18692#0" expanded="true" />
+            <element signature="e#18745#19889#0" expanded="true" />
+            <element signature="e#19120#19554#0" expanded="true" />
+            <element signature="e#19553#19554#0" expanded="true" />
+            <element signature="e#19603#19833#0" expanded="true" />
+            <element signature="e#19832#19833#0" expanded="true" />
+            <element signature="e#19888#19889#0" expanded="true" />
+            <element signature="e#22246#24696#0" expanded="true" />
+            <element signature="e#24695#24696#0" expanded="true" />
+            <element signature="e#24750#24911#0" expanded="true" />
+            <element signature="e#24910#24911#0" expanded="true" />
+            <element signature="e#25101#25102#0" expanded="true" />
+            <element signature="e#25129#25130#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="34" column="47" lean-forward="false" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/GroupActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3672">
+          <caret line="67" column="55" lean-forward="false" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="55" />
+          <folding>
+            <element signature="e#9479#11260#0" expanded="true" />
+            <element signature="e#11259#11260#0" expanded="true" />
+            <element signature="e#11315#11542#0" expanded="true" />
+            <element signature="e#11541#11542#0" expanded="true" />
+            <element signature="e#11940#13278#0" expanded="true" />
+            <element signature="e#13277#13278#0" expanded="true" />
+            <element signature="e#13327#13557#0" expanded="true" />
+            <element signature="e#13556#13557#0" expanded="true" />
+            <element signature="e#13977#13978#0" expanded="true" />
+            <element signature="e#14015#14016#0" expanded="true" />
+            <element signature="e#14984#15156#0" expanded="true" />
+            <element signature="e#15155#15156#0" expanded="true" />
+            <element signature="e#15210#15371#0" expanded="true" />
+            <element signature="e#15370#15371#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/vanessa/groupsms/AddContacts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="447" column="11" lean-forward="false" selection-start-line="447" selection-start-column="11" selection-end-line="447" selection-end-column="11" />
+          <folding>
+            <element signature="e#13750#13751#0" expanded="true" />
+            <element signature="e#13797#13798#0" expanded="true" />
+            <element signature="e#16408#16409#0" expanded="true" />
+            <element signature="e#16436#16437#0" expanded="true" />
           </folding>
         </state>
       </provider>

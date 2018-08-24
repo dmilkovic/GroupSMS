@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                finish();
             }
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -330,8 +331,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         }
                     });
                 }else{
-                    checkBox.setVisibility(GONE);
-                    //fab.setVisibility(View.VISIBLE);
+                    checkBox.setOnCheckedChangeListener(null);
+                    checkBox.setChecked(false);
+                    checkBox.setVisibility(View.GONE);
                 }
                 return view;
             }

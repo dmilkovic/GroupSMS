@@ -333,7 +333,6 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                         dialog.dismiss();
                         Intent intent = new Intent(AddContacts.this, MainActivity.class);
                         startActivity(intent);
-
                     }
                 });
                 alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -355,7 +354,7 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
                     public void onClick(DialogInterface dialogInterface, int i) {
                        // mResult.setText(listItems[i]);
                         checkedOrder = i;
-                        writeNewGroup(group_name);
+                        writeNewGroup(group_name, false);
                         finish();
                         Intent contacts = new Intent(AddContacts.this, AddContacts.class);
                         contacts.putExtra("order", checkedOrder);
@@ -379,11 +378,11 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
     }
 
     public void addMembers(View view) {
-        writeNewGroup(group_name);
+        writeNewGroup(group_name, true);
     }
 
 
-    private void writeNewGroup(final String group_name) {
+    private void writeNewGroup(final String group_name, boolean startNew) {
         members = new ArrayList<String>();
         dref.orderByChild("name").equalTo(group_name).addChildEventListener(new ChildEventListener() {
             @Override
@@ -444,10 +443,15 @@ public class AddContacts extends AppCompatActivity implements SearchView.OnQuery
             return;
         }
 
-        finish();
-        Intent group = new Intent(AddContacts.this, GroupActivity.class);
-        group.putExtra("group_name", group_name);
-        startActivity(group);
+        if(startNew)
+        {
+            GroupActivity.activity.finish();
+            finish();
+            Intent group = new Intent(AddContacts.this, GroupActivity.class);
+            group.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            group.putExtra("group_name", group_name);
+            startActivity(group);
+        }
     }
 
     @Override

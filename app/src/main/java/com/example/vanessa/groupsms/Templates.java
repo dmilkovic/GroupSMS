@@ -52,7 +52,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     ArrayList<HashMap<String, String>> multiselect_list = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
-    MenuItem searchMenuItem, delete;
+    MenuItem searchMenuItem, delete, orderByMenuItem;
     SearchView searchView;
 
     ActionMode mActionMode;
@@ -61,6 +61,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
     private String templateId;
 
+    private boolean loading = true;
     boolean isMultiSelect = false;
     boolean flag = false;
     String content=null;
@@ -69,6 +70,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     EditText edit_content;
     FloatingActionButton fab;
     String uid;
+
+    AlertDialog alertAdd, alertShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,40 +86,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fab = (FloatingActionButton)findViewById(R.id.add_button2);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            uid = user.getUid();
-        }
-
-        dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
-
-        dref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Template template = dataSnapshot.getValue(Template.class);
-                HashMap<String, String> object = new HashMap<>();
-                object.put("name", template.getTitle());
-                object.put("message", template.getContent());
-                list.add(object);
-                refreshAdapter();
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Template template = dataSnapshot.getValue(Template.class);
-                list.remove(template.getTitle());
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        getData();
+        refreshAdapter();
 
        /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -200,6 +171,49 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         });*/
         if (adapter==null) flag=true;
         //showText();
+    }
+
+    private void getData()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
+
+        dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
+
+        dref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Template template = dataSnapshot.getValue(Template.class);
+                HashMap<String, String> object = new HashMap<>();
+                object.put("name", template.getTitle());
+                object.put("message", template.getContent());
+
+                Log.d("loading", loading + "  " +  object.get("name"));
+                list.add(object);
+                adapter.notifyDataSetChanged();
+
+           //     refreshAdapter();
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Template template = dataSnapshot.getValue(Template.class);
+                list.remove(template.getTitle());
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 //    public void showText(){
@@ -312,6 +326,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                         }
                     });
                 }else{
+                    checkBox.setOnCheckedChangeListener(null);
+                    checkBox.setChecked(false);
                     checkBox.setVisibility(View.GONE);
                     fab.setVisibility(View.VISIBLE);
                 }
@@ -320,21 +336,22 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         };
 
         lv.setAdapter(adapter);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if(!isMultiSelect)
                 {
                     HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
                     final String title = object.get("name");
-
-                    dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
+                    content = object.get("message");
+                    showTemplate(title, content, position);
+                  /*  dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             Template template = dataSnapshot.getValue(Template.class);
                             content = template.getContent();
 
-                            showTemplate(title,content);
+                            showTemplate(title, content, position);
                         }
                         @Override
                         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -348,7 +365,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
-                    });
+                    });*/
                 }
             }
         });
@@ -359,15 +376,18 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                 return true;
             }
         });
+
     }
 
     String new_title="";
     String new_content="";
     String oldTitle="";
 
-    public void showTemplate(final String title, final String content){
+    public void showTemplate(final String title, final String content, final int position){
+
+        if(alertShow != null) alertShow.dismiss();
         oldTitle=title;
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Templates.this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
         dialogBuilder.setView(dialogView);
@@ -396,33 +416,23 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-//                Query applesQuery = dref.orderByChild("title").equalTo(oldTitle);
-//                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-//                            appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Log.e(TAG, "onCancelled", databaseError.toException());
-//                    }
-//                });
-
                 new_title = edit_title.getText().toString();
                 new_content = edit_content.getText().toString();
 
                 final Query applesQuery = dref.orderByChild("title").equalTo(oldTitle);
-                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                applesQuery.addValueEventListener(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
                             appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
                             appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
+                            Log.d("NOVI", new_content);
+                          /*  HashMap<String, String> newObject = new HashMap<>();
+                            newObject.put("name", new_title);
+                            newObject.put("message", new_content);
+                            list.set(position, newObject);
+                            //adapter.notifyDataSetChanged();*/
                         }
                     }
 
@@ -431,9 +441,15 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                         Log.e(TAG, "onCancelled", databaseError.toException());
                     }
                 });
-                Intent templates = new Intent(Templates.this, Templates.class);
-                startActivity(templates);
-
+               /* Intent templates = new Intent(Templates.this, Templates.class);
+                startActivity(templates);*/
+              //  adapter.notifyDataSetChanged();
+         //       refreshAdapter();
+                HashMap<String, String> newObject = new HashMap<>();
+                newObject.put("name", new_title);
+                newObject.put("message", new_content);
+                list.set(position, newObject);
+                adapter.notifyDataSetChanged();
               //adapter.notifyDataSetChanged();
             }
         });
@@ -472,16 +488,10 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             }
         });
 
-        AlertDialog b = dialogBuilder.create();
-        b.show();
+        alertShow = dialogBuilder.create();
+        alertShow.show();
     }
 
-
-    @Override
-    public void onBackPressed(){
-        Intent main = new Intent(Templates.this, MainActivity.class);
-        startActivity(main);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -494,6 +504,9 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         searchMenuItem = menu.findItem(R.id.search);
         searchView = (SearchView) searchMenuItem.getActionView();
 
+        orderByMenuItem = menu.findItem(R.id.order);
+        orderByMenuItem.setVisible(false);
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
@@ -504,6 +517,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
+
             case android.R.id.home:
                 this.finish();
                 return true;
@@ -516,6 +530,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     private String template_content = "";
 
     public void add(View view){
+        if(alertAdd != null) alertAdd.dismiss();
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
@@ -541,6 +556,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         content.setHorizontalScrollBarEnabled(false);
         dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                loading = false;
 
                 template_title = title.getText().toString();
                 template_content = content.getText().toString();
@@ -559,13 +575,31 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                     Template template = new Template(template_title, template_content);
                     dref.child("templates").child(templateId).setValue(template);
                     dref.child(template_title);
-
+                    dref.child(template_content);
                 }
                 finish();
-                /*adapter.notifyDataSetChanged();
-                refreshAdapter();*/
+
                 Intent templates = new Intent(Templates.this, Templates.class);
                 startActivity(templates);
+
+                //ako ovo makneš neće se spremiti promjene ako editaš tek napravljeni template!
+
+
+              /*  HashMap<String, String> newObject = new HashMap<>();
+                newObject.put("name",template_title);
+                newObject.put("message", template_content);
+                list.add(newObject);
+                adapter.notifyDataSetChanged();
+              /*  HashMap<String, String> newObject = new HashMap<>();
+                newObject.put("name",template_title);
+                newObject.put("message", template_content);
+                list.add(newObject);
+                adapter.notifyDataSetChanged();
+                refreshAdapter();*/
+               /* loading = true;
+                list.clear();
+                getData();
+                adapter.notifyDataSetChanged();*/
             }
         });
 
@@ -574,8 +608,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                 //pass
             }
         });
-        AlertDialog b = dialogBuilder.create();
-        b.show();
+        alertAdd = dialogBuilder.create();
+        alertAdd.show();
 
     }
 

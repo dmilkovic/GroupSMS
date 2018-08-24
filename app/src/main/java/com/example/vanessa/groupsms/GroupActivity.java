@@ -1,5 +1,6 @@
 package com.example.vanessa.groupsms;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.text.InputType;
 import android.util.Log;
@@ -38,6 +40,8 @@ public class GroupActivity extends AppCompatActivity {
     MenuItem add, rename, delete;
 
     DatabaseReference dref;
+
+    public static Activity activity;
     DatabaseReference dref2;
 
     ListView listview;
@@ -64,6 +68,8 @@ public class GroupActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+
+        activity = this;
 
         Bundle extras = getIntent().getExtras();
         group_name = extras.getString("group_name");
@@ -204,20 +210,6 @@ public class GroupActivity extends AppCompatActivity {
         });
 
     }
-
-    @Override
-    public boolean onSupportNavigateUp(){
-        Intent main = new Intent(GroupActivity.this, MainActivity.class);
-        startActivity(main);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent main = new Intent(GroupActivity.this, MainActivity.class);
-        startActivity(main);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.group_menu, menu);
@@ -276,9 +268,11 @@ public class GroupActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        finish();
                         Intent intent = new Intent(GroupActivity.this, GroupActivity.class);
                         intent.putExtra("group_name", new_name);
                         startActivity(intent);
+                       // getSupportActionBar().setTitle(new_name);
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -322,7 +316,6 @@ public class GroupActivity extends AppCompatActivity {
                         dialog.dismiss();
                         Intent intent = new Intent(GroupActivity.this, MainActivity.class);
                         startActivity(intent);
-
                     }
                 });
                 alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -335,6 +328,10 @@ public class GroupActivity extends AppCompatActivity {
                 });
 
                 alert.show();
+                return true;
+
+            case android.R.id.home:
+                this.finish();
                 return true;
 
             default:

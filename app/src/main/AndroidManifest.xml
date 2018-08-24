@@ -32,7 +32,8 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".GroupActivity" />
+        <activity android:name=".GroupActivity"
+        />
         <activity android:name=".AddContacts" />
         <activity
             android:name=".Templates"

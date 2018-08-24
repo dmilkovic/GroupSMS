@@ -65,7 +65,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
    // ArrayList<HashMap<String, String>> newList = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
-    MenuItem searchMenuItem, delete;
+    MenuItem searchMenuItem, delete, orderByMenuItem;
     SearchView searchView;
 
     Menu context_menu;
@@ -114,9 +114,6 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         if (user != null) {
             uid = user.getUid();
         }
-
-        dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
-        dref2=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("groups");
         getData();
 
      /*   listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,6 +147,55 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             }
         });
 */
+
+    }
+
+    //public ArrayList<HashMap<String, String>> getData()
+    public void getData()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
+        dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
+        dref2=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("groups");
+        //newList.clear();
+        dref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Template template = dataSnapshot.getValue(Template.class);
+
+                HashMap<String, String> object = new HashMap<>();
+                object.put("name", template.getTitle());
+                object.put("message", template.getContent());
+                Log.d("object", object.get("name") + object.get("message"));
+                //list.add("name", template.getTitle());
+                list.add(object);
+                ///list.add(template.getContent());
+                refreshAdapter();
+               // adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Template template = dataSnapshot.getValue(Template.class);
+                list.remove(template.getTitle());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         dref2.orderByChild("name").equalTo(group_name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -169,47 +215,6 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    //public ArrayList<HashMap<String, String>> getData()
-    public void getData()
-    {
-        //newList.clear();
-        dref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Template template = dataSnapshot.getValue(Template.class);
-
-                HashMap<String, String> object = new HashMap<>();
-                object.put("name", template.getTitle());
-                object.put("message", template.getContent());
-                Log.d("object", object.get("name") + object.get("message"));
-                //list.add("name", template.getTitle());
-                list.add(object);
-                ///list.add(template.getContent());
-                refreshAdapter();
-                //adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Template template = dataSnapshot.getValue(Template.class);
-                list.remove(template.getTitle());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -410,7 +415,9 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                         }
                     });
                 }else{
-                    checkBox.setVisibility(GONE);
+                    checkBox.setOnCheckedChangeListener(null);
+                    checkBox.setChecked(false);
+                    checkBox.setVisibility(View.GONE);
                     fab.setVisibility(View.VISIBLE);
                 }
                 return view;
@@ -432,7 +439,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                                   }});
         */
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (!isMultiSelect)
                 {
                     HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
@@ -443,7 +450,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                             Template template = dataSnapshot.getValue(Template.class);
                             content = template.getContent();
                             //showTemplate(content, template.getTitle());
-                            showTemplate(template);
+                            showTemplate(template, position);
                         }
 
                         @Override
@@ -530,7 +537,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
 
     String new_content="";
     AlertDialog bEdit, b;
-    public void showTemplate(Template template){
+    public void showTemplate(Template template, final int position){
         if(b != null) b.dismiss();
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -579,7 +586,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Template template1 = dataSnapshot.getValue(Template.class);
                         new_content = template1.getContent();
-                        showEditTemplate(template1);
+                        showEditTemplate(template1, position);
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -604,10 +611,10 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     String new_title="";
     String oldTitle="";
 
-    public void showEditTemplate(final Template template){
+    public void showEditTemplate(final Template template, final int position){
         if(bEdit != null) bEdit.dismiss();
         final String title = template.getTitle();
-        String content = template.getContent();
+        final String content = template.getContent();
 
         oldTitle=title;
         final AlertDialog.Builder dialogBuilderEdit = new AlertDialog.Builder(this);
@@ -676,21 +683,21 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                         Log.e(TAG, "onCancelled", databaseError.toException());
                     }
                 });
-               //NE RADI
-               /* list.clear();
-                list.addAll(getData());
-                adapter.notifyDataSetChanged();*/
-
-                Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
+                HashMap<String, String> newObject = new HashMap<>();
+                newObject.put("name", new_title);
+                newObject.put("message", new_content);
+                list.set(position, newObject);
+                adapter.notifyDataSetChanged();
+                /*Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
                 templates.putExtra("group_name", group_name);
-                startActivity(templates);
+                startActivity(templates);*/
             }
         });
 
         dialogBuilderEdit.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 bEdit.dismiss();
-                showTemplate(template);
+                showTemplate(template, position);
             }
         });
 
@@ -771,6 +778,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
         SearchManager searchManager = (SearchManager)
                 getSystemService(Context.SEARCH_SERVICE);
         searchMenuItem = menu.findItem(R.id.search);
+        orderByMenuItem = menu.findItem(R.id.order);
+        orderByMenuItem.setVisible(false);
         searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -805,8 +814,11 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
     private String template_title = "";
     private String template_content = "";
     private String templateId;
+    private android.support.v7.app.AlertDialog addDialog;
+
 
     public void add(View view){
+        if(addDialog!=null) addDialog.dismiss();
         android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
@@ -836,7 +848,6 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 template_title = title.getText().toString();
                 template_content = content.getText().toString();
 
-
                 if((template_title.isEmpty() || !(template_title.trim().length() > 0)) && (template_content.isEmpty() || !(template_content.trim().length() > 0))) {
                     Toast.makeText(getApplicationContext(), "Template can't be empty. ", Toast.LENGTH_SHORT).show();
                 }else if (template_content.isEmpty() || !(template_content.trim().length() > 0)){
@@ -850,14 +861,18 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     Template template = new Template(template_title, template_content);
                     dref.child("templates").child(templateId).setValue(template);
                     dref.child(template_title);
+                    dref.child(template_content);
 
                 }
-                adapter.notifyDataSetChanged();
-                refreshAdapter();
-                /*finish();
+                /*list.clear();
+                getData();
+              //  refreshAdapter();
+                adapter.notifyDataSetChanged();*/
+               // refreshAdapter();
+                finish();
                 Intent templates = new Intent(ChooseTemplate.this, ChooseTemplate.class);
                 templates.putExtra("group_name", group_name);
-                startActivity(templates);*/
+                startActivity(templates);
 
             }
         });
@@ -867,8 +882,8 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                 //pass
             }
         });
-        android.support.v7.app.AlertDialog b = dialogBuilder.create();
-        b.show();
+        addDialog = dialogBuilder.create();
+        addDialog.show();
 
     }
 
@@ -878,8 +893,6 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
        {
            deleteItem(item);
        }
-       //adapter.notifyDataSetChanged();
-     //  refreshAdapter();
    }
 
     public void deleteItem(HashMap<String, String> item)
