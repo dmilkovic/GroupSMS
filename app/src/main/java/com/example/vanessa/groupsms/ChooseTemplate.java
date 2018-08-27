@@ -858,7 +858,7 @@ public class ChooseTemplate extends AppCompatActivity implements SearchView.OnQu
                     dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid);
                     templateId= dref.push().getKey();
 
-                    Template template = new Template(template_title, template_content);
+                    Template template = new Template(template_title, template_content, templateId);
                     dref.child("templates").child(templateId).setValue(template);
                     dref.child(template_title);
                     dref.child(template_content);

@@ -86,8 +86,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fab = (FloatingActionButton)findViewById(R.id.add_button2);
-        getData();
-        refreshAdapter();
+
 
        /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -173,6 +172,14 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
         //showText();
     }
 
+    protected void onStart()
+    {
+        super.onStart();
+        list.clear();
+        getData();
+        refreshAdapter();
+    }
+
     private void getData()
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -182,15 +189,40 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
         dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
 
-        dref.addChildEventListener(new ChildEventListener() {
+      /*  dref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
+
+                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                    Template t = appleSnapshot.getValue(Template.class);
+                    HashMap<String, String> newObject = new HashMap<>();
+                    newObject.put("name", t.getTitle());
+                    newObject.put("message", t.getContent());
+                    list.add(newObject);
+                    Log.d("NOVI", new_content + t.getContent());
+                }
+                refreshAdapter();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
+
+      // dref.orderByChild("title").addChildEventListener(new ChildEventListener()
+
+            dref.orderByKey().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Template template = dataSnapshot.getValue(Template.class);
                 HashMap<String, String> object = new HashMap<>();
                 object.put("name", template.getTitle());
                 object.put("message", template.getContent());
+                object.put("id", String.valueOf(template.id));
 
-                Log.d("loading", loading + "  " +  object.get("name"));
+                Log.d("loading", loading + "  " +  object.get("name") + "ID: " + template.id);
                 list.add(object);
                 adapter.notifyDataSetChanged();
 
@@ -344,7 +376,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                     HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
                     final String title = object.get("name");
                     content = object.get("message");
-                    showTemplate(title, content, position);
+                    Log.d("ID", "OVo je id"+ object.get("id"));
+                    showTemplate(title, content, position, object.get("id"));
                   /*  dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -383,7 +416,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     String new_content="";
     String oldTitle="";
 
-    public void showTemplate(final String title, final String content, final int position){
+    public void showTemplate(final String title, final String content, final int position, final String id){
 
         if(alertShow != null) alertShow.dismiss();
         oldTitle=title;
@@ -419,15 +452,18 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                 new_title = edit_title.getText().toString();
                 new_content = edit_content.getText().toString();
 
-                final Query applesQuery = dref.orderByChild("title").equalTo(oldTitle);
-                applesQuery.addValueEventListener(new ValueEventListener() {
+                final Query applesQuery = dref.orderByChild("id").equalTo(id);
+                //final Query applesQuery = dref.orderByChild("id").equalTo(id);
+                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                            appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
-                            appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
-                            Log.d("NOVI", new_content);
+                            Template t = new Template(new_title, new_content, id);
+                            appleSnapshot.getRef().setValue(t);
+                         //   appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
+                         //   appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
+                            Log.d("NOVI", new_content + dataSnapshot.getValue(Template.class).getContent() + "  " + id);
                           /*  HashMap<String, String> newObject = new HashMap<>();
                             newObject.put("name", new_title);
                             newObject.put("message", new_content);
@@ -572,18 +608,17 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                     dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid);
                     templateId= dref.push().getKey();
 
-                    Template template = new Template(template_title, template_content);
+                    Template template = new Template(template_title, template_content, templateId);
+                    // dref.child("templates").push().setValue(template);
                     dref.child("templates").child(templateId).setValue(template);
-                    dref.child(template_title);
-                    dref.child(template_content);
+                   // dref.child(template_title);
+                  //  dref.child(template_content);
                 }
-                finish();
-
-                Intent templates = new Intent(Templates.this, Templates.class);
-                startActivity(templates);
 
                 //ako ovo makneš neće se spremiti promjene ako editaš tek napravljeni template!
-
+                finish();
+                Intent templates = new Intent(Templates.this, Templates.class);
+                startActivity(templates);
 
               /*  HashMap<String, String> newObject = new HashMap<>();
                 newObject.put("name",template_title);
