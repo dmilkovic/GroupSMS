@@ -35,13 +35,7 @@
         <activity android:name=".GroupActivity"
         />
         <activity android:name=".AddContacts" />
-        <activity
-            android:name=".Templates"
-            android:label="@string/title_activity_templates">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
+
         <activity android:name=".ChooseTemplate"
             >
             <meta-data

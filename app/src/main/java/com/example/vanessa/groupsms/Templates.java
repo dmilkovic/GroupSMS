@@ -1,11 +1,15 @@
 package com.example.vanessa.groupsms;
 
+import android.Manifest;
+import android.support.v4.app.ListFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -30,6 +34,9 @@ import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -43,7 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Templates extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class Templates extends ListFragment implements SearchView.OnQueryTextListener {
     MenuItem search, add;
 
     DatabaseReference dref;
@@ -73,7 +80,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
     AlertDialog alertAdd, alertShow;
 
-    @Override
+   /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_templates);
@@ -87,98 +94,50 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
         fab = (FloatingActionButton)findViewById(R.id.add_button2);
 
+        if (adapter==null) flag=true;
+    }*/
 
-       /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+   @Override
+   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       View view = inflater.inflate(R.layout.fragment_templates, container, false);
 
-                final String title = (String) parent.getItemAtPosition(position);
+       lv=(ListView)view.findViewById(android.R.id.list);
 
-                dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Template template = dataSnapshot.getValue(Template.class);
-                        content = template.getContent();
+       fab = (FloatingActionButton)view.findViewById(R.id.add_button2);
 
-                        showTemplate(title,content);
-                    }
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    }
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
 
+       setHasOptionsMenu(true);
+       return view;
+   }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        lv.setMultiChoiceModeListener(modeListener);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add(view);
             }
         });
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getData();
+        refreshAdapter();
 
-        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long arg3) {
-                final String template= list.get(position);
-                final int index = position;
-                AlertDialog.Builder alert = new AlertDialog.Builder(Templates.this);
-//                alert.setTitle("Alert!");
-                alert.setMessage("Are you sure you want to delete this template?");
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(getApplicationContext(), "pozicija: " + position + ", ime: " + name, Toast.LENGTH_SHORT).show();
-
-                        Query applesQuery = dref.orderByChild("title").equalTo(template);
-                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.e(TAG, "onCancelled", databaseError.toException());
-                            }
-                        });
-                        list.remove(index); //brisanje samo iz arraya, ne iz firebasea
-                        adapter.notifyDataSetChanged();
-
-                        dialog.dismiss();
-
-                    }
-                });
-                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                });
-
-                alert.show();
-                return true;
-            }
-        });*/
-        if (adapter==null) flag=true;
-        //showText();
     }
 
-    protected void onStart()
+   /* protected void onStart()
     {
         super.onStart();
         list.clear();
         getData();
         refreshAdapter();
-    }
+    }*/
 
     private void getData()
     {
@@ -230,6 +189,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                refreshAdapter();
                 adapter.notifyDataSetChanged();
             }
 
@@ -237,6 +197,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Template template = dataSnapshot.getValue(Template.class);
                 list.remove(template.getTitle());
+                refreshAdapter();
                 adapter.notifyDataSetChanged();
             }
             @Override
@@ -268,6 +229,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             inflater.inflate(R.menu.delete_templates_menu, menu);
             isMultiSelect = true;
             mActionMode = actionMode;
+            mActionMode.setTitle("Delete templates");
             delete = menu.findItem(R.id.action_delete);
             delete.setVisible(false);
             return true;
@@ -284,7 +246,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             switch (menuItem.getItemId())
             {
                 case R.id.action_delete:
-                    android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(Templates.this);
+                    android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(getContext());
                     alert.setMessage("Are you sure you want to delete selected templates?");
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
@@ -316,7 +278,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
     };
 
     private void refreshAdapter(){
-        adapter = new SimpleAdapter(this.getApplicationContext(), list,
+        adapter = new SimpleAdapter(getActivity().getApplicationContext(), list,
                 R.layout.contetnt_template, new String[]{"name", "message"},
                 new int[]{R.id.name, R.id.message}) {
             @Override
@@ -341,12 +303,13 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                                 multiselect_list.add(list.get(position));
                             }
 
-                            if (multiselect_list.size() > 0) {
-                                mActionMode.setTitle("" + multiselect_list.size());
+                            if (multiselect_list.size() > 0 ) {
+                                if(multiselect_list.size() == 1) mActionMode.setTitle("Delete " + multiselect_list.size() + " template");
+                                else mActionMode.setTitle("Delete " + multiselect_list.size() + " templates");
                             }
                             else
                             {
-                                mActionMode.setTitle("");
+                                mActionMode.setTitle("Delete templates");
                             }
 
                             if(multiselect_list.size() != 0 )
@@ -420,8 +383,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
         if(alertShow != null) alertShow.dismiss();
         oldTitle=title;
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Templates.this);
-        LayoutInflater inflater = this.getLayoutInflater();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
         dialogBuilder.setView(dialogView);
 
@@ -486,6 +449,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                 newObject.put("message", new_content);
                 list.set(position, newObject);
                 adapter.notifyDataSetChanged();
+                refreshAdapter();
               //adapter.notifyDataSetChanged();
             }
         });
@@ -498,7 +462,7 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
         dialogBuilder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Templates.this);
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity().getApplicationContext());
 //                alert.setTitle("Alert!");
                 alert.setMessage("Are you sure you want to delete this template?");
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -530,23 +494,21 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
-        SearchManager searchManager = (SearchManager)
-                getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchMenuItem = menu.findItem(R.id.search);
         searchView = (SearchView) searchMenuItem.getActionView();
 
         orderByMenuItem = menu.findItem(R.id.order);
         orderByMenuItem.setVisible(false);
 
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -555,8 +517,18 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
             case R.id.search:
 
             case android.R.id.home:
-                this.finish();
+                //this.finish();
                 return true;
+            case R.id.action_logout:
+                Auth.GoogleSignInApi.signOut(MainActivityTab.mGoogleApiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(getActivity(), Login.class);
+                                startActivity(intent);
+                            }
+                        });
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -567,8 +539,8 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
     public void add(View view){
         if(alertAdd != null) alertAdd.dismiss();
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog2, null);
         dialogBuilder.setView(dialogView);
 
@@ -599,11 +571,11 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
 
 
                 if((template_title.isEmpty() || !(template_title.trim().length() > 0)) && (template_content.isEmpty() || !(template_content.trim().length() > 0))) {
-                    Toast.makeText(getApplicationContext(), "Template can't be empty. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Template can't be empty. ", Toast.LENGTH_SHORT).show();
                 }else if (template_content.isEmpty() || !(template_content.trim().length() > 0)){
-                    Toast.makeText(getApplicationContext(), "Template content can't be empty. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Template content can't be empty. ", Toast.LENGTH_SHORT).show();
                 }else if (template_title.isEmpty() || !(template_title.trim().length() > 0)) {
-                    Toast.makeText(getApplicationContext(), "Template title can't be empty. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Template title can't be empty. ", Toast.LENGTH_SHORT).show();
                 }else{
                     dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid);
                     templateId= dref.push().getKey();
@@ -616,10 +588,14 @@ public class Templates extends AppCompatActivity implements SearchView.OnQueryTe
                 }
 
                 //ako ovo makneš neće se spremiti promjene ako editaš tek napravljeni template!
-                finish();
-                Intent templates = new Intent(Templates.this, Templates.class);
+              /*  getActivity().finish();
+                Intent templates = new Intent(getActivity(), Templates.class);
                 startActivity(templates);
 
+                */
+
+              adapter.notifyDataSetChanged();
+              refreshAdapter();
               /*  HashMap<String, String> newObject = new HashMap<>();
                 newObject.put("name",template_title);
                 newObject.put("message", template_content);
