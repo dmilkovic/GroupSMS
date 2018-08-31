@@ -189,8 +189,8 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                refreshAdapter();
                 adapter.notifyDataSetChanged();
+                refreshAdapter();
             }
 
             @Override
@@ -340,7 +340,13 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
                     final String title = object.get("name");
                     content = object.get("message");
                     Log.d("ID", "OVo je id"+ object.get("id"));
-                    showTemplate(title, content, position, object.get("id"));
+
+                    //showTemplate(title, content, position, object.get("id"));
+              //      String group = (String) parent.getItemAtPosition(position);
+                    Intent group_activity = new Intent(getActivity(), TemplateActivity.class);
+
+                    group_activity.putExtra("id", object.get("id"));
+                    startActivity(group_activity);
                   /*  dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {

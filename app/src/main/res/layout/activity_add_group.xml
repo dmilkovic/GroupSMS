@@ -5,15 +5,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have no groups yet."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+        -->
+
     <ListView
         android:id="@android:id/list"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-    </ListView>
+        android:layout_width="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_button2"
+        android:id="@+id/fab_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,10 +29,9 @@
         android:layout_marginBottom="25dp"
         android:layout_marginRight="16dp"
         android:clickable="true"
+        android:src="@drawable/ic_check_white_36dp"
         app:backgroundTint="@color/colorAccent"
-        android:src="@drawable/ic_add_white_24dp"
-        app:elevation="4dp"
-        android:text="Create new template"/>
+        app:elevation="4dp" />
 
     <!--<TextView-->
     <!--android:id="@+id/text_main"-->

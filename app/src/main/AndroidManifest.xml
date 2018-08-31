@@ -36,6 +36,12 @@
         />
         <activity android:name=".AddContacts" />
 
+        <activity android:name=".TemplateActivity" />
+
+        <activity android:name=".AddGroups" />
+
+        <activity android:name=".RemoveGroupsActivity" />
+
         <activity android:name=".ChooseTemplate"
             >
             <meta-data
@@ -49,6 +55,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -148,7 +148,7 @@ public class MainActivityTab extends ListFragment implements SearchView.OnQueryT
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getActivity().finish();
+//                getActivity().finish();
             }
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
