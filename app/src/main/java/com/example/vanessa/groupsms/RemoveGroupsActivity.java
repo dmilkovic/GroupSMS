@@ -260,15 +260,7 @@ public class RemoveGroupsActivity extends AppCompatActivity implements SearchVie
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        SearchManager searchManager = (SearchManager)this.getSystemService(Context.SEARCH_SERVICE);
-        searchMenuItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchMenuItem.getActionView();
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(this);
+        getMenuInflater().inflate(R.menu.add_remove_groups_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -276,17 +268,9 @@ public class RemoveGroupsActivity extends AppCompatActivity implements SearchVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-            case R.id.action_logout:
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(RemoveGroupsActivity.this, Login.class);
-                                startActivity(intent);
-                            }
-                        });
+            case android.R.id.home:
+                this.finish();
+                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

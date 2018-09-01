@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -104,10 +105,9 @@ public class TemplateActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_template);
-        setTitle("My groups");
 
         Bundle extras = getIntent().getExtras();
         templateId = extras.getString("id");
@@ -166,7 +166,7 @@ public class TemplateActivity extends AppCompatActivity  {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveText();
+                saveContent();
             }
         });
 
@@ -222,6 +222,7 @@ public class TemplateActivity extends AppCompatActivity  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
                     template =  appleSnapshot.getValue(Template.class);
+                    setTitle(template.getTitle());
                     groups = template.getGroups();
                     textView.setText(template.getContent());
                     dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("groups");
@@ -277,6 +278,7 @@ public class TemplateActivity extends AppCompatActivity  {
             });
         }*/
        refreshAdapter();
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     ArrayList<String> numbers=new ArrayList<>();
@@ -303,6 +305,26 @@ public class TemplateActivity extends AppCompatActivity  {
                 alreadyAddedContacts.add(number);
                 Toast.makeText(getApplicationContext(), "SMS sent to group:" + group.getName(), Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.template_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_title:
+                editTitle();
+                return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -365,65 +387,16 @@ public class TemplateActivity extends AppCompatActivity  {
 
         listview.setAdapter(adapter);
 
-    /*    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 HashMap<String, String> object = (HashMap<String, String>) parent.getItemAtPosition(position);
                 String group = object.get("name");
-                Intent group_activity = new Intent(TemplateActivity, GroupActivity.class);
+                Intent group_activity = new Intent(TemplateActivity.this, GroupActivity.class);
                 group_activity.putExtra("group_name", group);
                 startActivity(group_activity);
             }
         });
-
-        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long arg3) {
-               /* final String name= list.get(position);
-                final int index = position;
-                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-//                alert.setTitle("Alert!");
-                alert.setMessage("Are you sure you want to delete group?");
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Query applesQuery = dref.orderByChild("name").equalTo(name);
-                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                                    appleSnapshot.getRef().removeValue(); //brisanje iz firebasea
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.e(TAG, "onCancelled", databaseError.toException());
-                            }
-                        });
-                        list.remove(index); //brisanje samo iz arraya, ne iz firebasea
-                        adapter.notifyDataSetChanged();
-
-                        dialog.dismiss();
-
-                    }
-                });
-                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                });
-
-                alert.show();*/
-          //      return true;
-      /*      }
-        });*/
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -478,27 +451,28 @@ public class TemplateActivity extends AppCompatActivity  {
         }
     }
 
-    private void saveText()
+    private void saveContent()
     {
         final String new_content = textView.getText().toString();
         dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
         final Query applesQuery = dref.orderByChild("id").equalTo(templateId);
-        //final Query applesQuery = dref.orderByChild("id").equalTo(id);
         applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                    //Template t = new Template(new_title, new_content, id);
-                   // appleSnapshot.getRef().setValue(t);
-                    //appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
-                    appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
-                 //   Log.d("NOVI", new_content + dataSnapshot.getValue(Template.class).getContent() + "  " + id);
-                          /*  HashMap<String, String> newObject = new HashMap<>();
-                            newObject.put("name", new_title);
+                    for(HashMap<String, String> object : Templates.list)
+                    {
+                        if(object.get("id").matches(templateId))
+                        {
+                            HashMap<String, String> newObject = new HashMap<>();
+                            newObject.put("name", template.getTitle());
                             newObject.put("message", new_content);
-                            list.set(position, newObject);
-                            //adapter.notifyDataSetChanged();*/
+                            newObject.put("id", templateId);
+                            Templates.list.set(Templates.list.indexOf(object), newObject);
+                        }
+                    }
+                    appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
+                    Toast.makeText(getApplicationContext(), "Changes saved", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -507,7 +481,71 @@ public class TemplateActivity extends AppCompatActivity  {
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
-        //setTitle(new_content);
+    }
+
+    private void editTitle()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Template title:");
+
+        // Set up the input
+        final EditText input = new EditText(getApplicationContext());
+        input.setTextColor(Color.BLACK);
+        input.setText(template.getTitle());
+
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
+        builder.setView(input);
+
+        // Set up the buttons
+        AlertDialog.Builder next = builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final String title = input.getText().toString();
+                if (title.isEmpty() || !(title.trim().length() > 0)){
+                    Toast.makeText(getApplication().getApplicationContext(), "Template name can't be empty. ", Toast.LENGTH_SHORT).show();
+                }else {
+                    dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates");
+                    final Query applesQuery = dref.orderByChild("id").equalTo(templateId);
+                    applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                for(HashMap<String, String> object : Templates.list)
+                                {
+                                    if(object.get("id").matches(templateId))
+                                    {
+                                        HashMap<String, String> newObject = new HashMap<>();
+                                        newObject.put("name", title);
+                                        newObject.put("message", template.getContent());
+                                        newObject.put("id", templateId);
+                                        Templates.list.set(Templates.list.indexOf(object), newObject);
+                                    }
+                                }
+                                appleSnapshot.getRef().child("title").setValue(title); //brisanje iz firebasea
+                                setTitle(title);
+                                Toast.makeText(getApplicationContext(), "Changes saved", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "onCancelled", databaseError.toException());
+                        }
+                    });
+                }
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+        input.requestFocus();
     }
 }
 

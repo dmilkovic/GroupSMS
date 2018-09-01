@@ -55,7 +55,7 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
 
     DatabaseReference dref;
     ListView lv;
-    ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    public static ArrayList<HashMap<String, String>> list = new ArrayList<>();
     ArrayList<HashMap<String, String>> multiselect_list = new ArrayList<>();
     private static final String TAG = "MainActivity";
 
@@ -64,7 +64,7 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
 
     ActionMode mActionMode;
 
-    private SimpleAdapter adapter;
+    public static SimpleAdapter adapter;
 
     private String templateId;
 
@@ -428,10 +428,10 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                            Template t = new Template(new_title, new_content, id);
-                            appleSnapshot.getRef().setValue(t);
-                         //   appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
-                         //   appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
+                           // Template t = new Template(new_title, new_content, id);
+                           // appleSnapshot.getRef().setValue(t);
+                            appleSnapshot.getRef().child("title").setValue(new_title); //brisanje iz firebasea
+                            appleSnapshot.getRef().child("content").setValue(new_content); //brisanje iz firebasea
                             Log.d("NOVI", new_content + dataSnapshot.getValue(Template.class).getContent() + "  " + id);
                           /*  HashMap<String, String> newObject = new HashMap<>();
                             newObject.put("name", new_title);
