@@ -5,7 +5,7 @@
     <item
         android:id="@+id/add_contacts"
         android:title="Add/Remove members"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/rename_group"

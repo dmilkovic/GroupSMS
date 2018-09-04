@@ -95,9 +95,7 @@ public class TemplateActivity extends AppCompatActivity  {
     String userId, templateId;
 
     private FirebaseAuth mAuth;
-
-    Button send;
-    ImageButton saveButton;
+    ImageButton saveButton, send;
 
     Template template;
     private ArrayList<String> groups;
@@ -114,7 +112,6 @@ public class TemplateActivity extends AppCompatActivity  {
 
         textView = (EditText)findViewById(R.id.edit_text);
         int lineheight = textView.getLineHeight();
-     //   textView.setMaxHeight(5*lineheight);
         textView.setHeight(5*lineheight);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         addGroup = (FloatingActionButton)findViewById(R.id.button_add);
@@ -142,19 +139,9 @@ public class TemplateActivity extends AppCompatActivity  {
             }
         });
 
-       /* listview=(ListView)findViewById(R.id.list);
-        listview.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listview.setMultiChoiceModeListener(modeListener);
-
-        fab1 = (FloatingActionButton)findViewById(R.id.button1);
-        fab2 = (FloatingActionButton)findViewById(R.id.add_button2);
-
-        // adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
-        listview.setAdapter(adapter);
-*/
         listview=(ListView)findViewById(android.R.id.list);
 
-        send = (Button)findViewById(R.id.button_send);
+        send = (ImageButton)findViewById(R.id.button_send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,6 +236,8 @@ public class TemplateActivity extends AppCompatActivity  {
                             }
                         });
                     }
+
+                    MainActivity.pDialog.cancel();
                 }
             }
 

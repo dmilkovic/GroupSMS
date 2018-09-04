@@ -36,7 +36,8 @@
         />
         <activity android:name=".AddContacts" />
 
-        <activity android:name=".TemplateActivity" />
+        <activity android:name=".TemplateActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".AddGroups" />
 

@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class MainActivityTab extends ListFragment implements SearchView.OnQueryT
     ListView listview;
     //  ArrayList<String> list=new ArrayList<>();
     ArrayList<HashMap<String, String>> multiselect_list = new ArrayList<>();
-    ArrayList<HashMap<String, String>> list1 = new ArrayList<>();
+    protected static ArrayList<HashMap<String, String>> list1 = new ArrayList<>();
 
     private static final String TAG = "MainActivity";
 
@@ -134,6 +135,14 @@ public class MainActivityTab extends ListFragment implements SearchView.OnQueryT
 
         dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("groups");
 
+        dref.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("We're done loading the initial "+dataSnapshot.getChildrenCount()+" items");
+                MainActivity.pDialog.cancel();
+            }
+            public void onCancelled(DatabaseError firebaseError) { }
+        });
+
         dref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -141,14 +150,22 @@ public class MainActivityTab extends ListFragment implements SearchView.OnQueryT
                 HashMap<String, String> object = new HashMap<>();
                 object.put("name", group.getName());
 
-                list1.add(object);
+                if(!list1.contains(object))
+                {
+                    list1.add(object);
+                }
+
+               // adapter.notifyDataSetChanged();
                 // list.add(group.getName());
                 // adapter.notifyDataSetChanged();
                 refreshAdapter();
             }
+
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 //                getActivity().finish();
+                  adapter.notifyDataSetChanged();
             }
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -461,6 +478,8 @@ public class MainActivityTab extends ListFragment implements SearchView.OnQueryT
         // Set up the input
         final EditText input = new EditText(getContext());
 
+        int maxLength = 20;
+        input.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 

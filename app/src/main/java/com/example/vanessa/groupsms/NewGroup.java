@@ -299,8 +299,8 @@ public class NewGroup extends AppCompatActivity implements SearchView.OnQueryTex
         Toast.makeText(getApplicationContext(), "New group: " + group_name, Toast.LENGTH_SHORT).show();
 
         finish();
-        Intent main = new Intent(NewGroup.this, MainActivity.class);
-        startActivity(main);
+       // Intent main = new Intent(NewGroup.this, MainActivity.class);
+        //startActivity(main);
     }
 
     @Override

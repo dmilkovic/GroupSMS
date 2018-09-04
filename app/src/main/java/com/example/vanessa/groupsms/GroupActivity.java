@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,6 +36,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GroupActivity extends AppCompatActivity {
     MenuItem add, rename, delete;
@@ -61,6 +63,7 @@ public class GroupActivity extends AppCompatActivity {
     String uid;
 
     String temp;
+    private boolean hasTemplates = false;
 
     private static final String TAG = "MainActivity";
     @Override
@@ -88,7 +91,6 @@ public class GroupActivity extends AppCompatActivity {
         dref=FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("groups");
 
         fab = (FloatingActionButton) findViewById(R.id.floating_button);
-        fab2 = (FloatingActionButton) findViewById(R.id.button_choose);
 
         dref.orderByChild("name").equalTo(group_name).addChildEventListener(new ChildEventListener() {
             @Override
@@ -198,9 +200,9 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.hasChild("templates")) {
-                    fab2.setVisibility(View.VISIBLE);
+                    hasTemplates = true;
                 }else{
-                    fab2.setVisibility(View.GONE);
+                    hasTemplates = false;
                 }
             }
 
@@ -240,7 +242,8 @@ public class GroupActivity extends AppCompatActivity {
                 input.setText(group_name);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-
+                int maxLength = 20;
+                input.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
                 builder.setView(input);
 
                 // Set up the buttons
@@ -267,11 +270,17 @@ public class GroupActivity extends AppCompatActivity {
                                     Log.e(TAG, "onCancelled", databaseError.toException());
                                 }
                             });
+                            HashMap<String, String> object = new HashMap<>();
+                            HashMap<String, String> newObject = new HashMap<>();
+                            object.put("name", group_name);
+                            newObject.put("name", new_name);
+                            MainActivityTab.list1.set(MainActivityTab.list1.indexOf(object), newObject);
+
+                            finish();
+                            Intent intent = new Intent(GroupActivity.this, GroupActivity.class);
+                            intent.putExtra("group_name", new_name);
+                            startActivity(intent);
                         }
-                        finish();
-                        Intent intent = new Intent(GroupActivity.this, GroupActivity.class);
-                        intent.putExtra("group_name", new_name);
-                        startActivity(intent);
                        // getSupportActionBar().setTitle(new_name);
                     }
                 });
@@ -314,6 +323,10 @@ public class GroupActivity extends AppCompatActivity {
                             }
                         });
                         dialog.dismiss();
+
+                        HashMap<String, String> object = new HashMap<>();
+                        object.put("name", group_name);
+                        MainActivityTab.list1.remove(object);
                         Intent intent = new Intent(GroupActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
@@ -345,7 +358,7 @@ public class GroupActivity extends AppCompatActivity {
         showChangeLangDialog();
     }
 
-    public void templates(View view){
+    public void templates(){
         Intent choose_template = new Intent(GroupActivity.this, ChooseTemplate.class);
         choose_template.putExtra("group_name", group_name);
 
@@ -379,6 +392,15 @@ public class GroupActivity extends AppCompatActivity {
                 //pass
             }
         });
+
+        if(hasTemplates) {
+            dialogBuilder.setNeutralButton("Choose template", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    templates();
+                }
+            });
+        }
         AlertDialog b = dialogBuilder.create();
         b.show();
     }

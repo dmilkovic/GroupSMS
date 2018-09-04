@@ -21,20 +21,6 @@
         android:layout_width="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_choose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginRight="16dp"
-        android:clickable="true"
-        android:onClick="templates"
-        app:backgroundTint="@color/pressed_color"
-        android:src="@drawable/templates"
-        app:elevation="4dp" />
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,5 +1,7 @@
 package com.example.vanessa.groupsms;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
     private FragmentAdapter mFragmentAdapter;
     private ViewPager mViewPager;
+    public static ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         //spusti tipkovnicu
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Retrieving data, please wait. ");
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -40,5 +47,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new MainActivityTab(), "Groups");
         adapter.addFragment(new Templates(), "Templates");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

@@ -186,6 +186,7 @@ public class RemoveGroupsActivity extends AppCompatActivity implements SearchVie
             public void onClick(View view) {
                 Log.d("GROUP1", new_id.size() + "SIZE" + new_id.toArray());
                 dref = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("templates").child(templateID).child("groups");
+                if(new_id.isEmpty()) new_id.add("");
                 dref.setValue(new_id);
               /*  Bundle bundle = new Bundle();
                 bundle.putSerializable("new_groups", new_id);*/

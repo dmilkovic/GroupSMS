@@ -130,15 +130,15 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
         refreshAdapter();
 
     }
-
-   /* protected void onStart()
+/*
+    public void onStart()
     {
         super.onStart();
         list.clear();
         getData();
         refreshAdapter();
-    }*/
-
+    }
+*/
     private void getData()
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -182,9 +182,11 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
                 object.put("id", String.valueOf(template.id));
 
                 Log.d("loading", loading + "  " +  object.get("name") + "ID: " + template.id);
-                list.add(object);
-                adapter.notifyDataSetChanged();
-
+                if(!list.contains(object))
+                {
+                    list.add(object);
+                    adapter.notifyDataSetChanged();
+                }
            //     refreshAdapter();
             }
             @Override
@@ -347,27 +349,6 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
 
                     group_activity.putExtra("id", object.get("id"));
                     startActivity(group_activity);
-                  /*  dref.orderByChild("title").equalTo(title).addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            Template template = dataSnapshot.getValue(Template.class);
-                            content = template.getContent();
-
-                            showTemplate(title, content, position);
-                        }
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        }
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        }
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });*/
                 }
             }
         });
@@ -592,31 +573,11 @@ public class Templates extends ListFragment implements SearchView.OnQueryTextLis
                    // dref.child(template_title);
                   //  dref.child(template_content);
                 }
-
-                //ako ovo makneš neće se spremiti promjene ako editaš tek napravljeni template!
-              /*  getActivity().finish();
-                Intent templates = new Intent(getActivity(), Templates.class);
-                startActivity(templates);
-
-                */
-
               adapter.notifyDataSetChanged();
               refreshAdapter();
-              /*  HashMap<String, String> newObject = new HashMap<>();
-                newObject.put("name",template_title);
-                newObject.put("message", template_content);
-                list.add(newObject);
-                adapter.notifyDataSetChanged();
-              /*  HashMap<String, String> newObject = new HashMap<>();
-                newObject.put("name",template_title);
-                newObject.put("message", template_content);
-                list.add(newObject);
-                adapter.notifyDataSetChanged();
-                refreshAdapter();*/
-               /* loading = true;
-                list.clear();
-                getData();
-                adapter.notifyDataSetChanged();*/
+              Intent template = new Intent(getActivity(), TemplateActivity.class);
+              template.putExtra("id", templateId);
+              startActivity(template);
             }
         });
 
